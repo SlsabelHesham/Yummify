@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_green"
+    tools:context=".WelcomeFragment" >
+
+    <View
+        android:id="@+id/welcomeView"
+        android:layout_width="392dp"
+        android:layout_height="542dp"
+        android:background="@drawable/welcome_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.984" />
+
+    <ImageView
+        android:id="@+id/welcomeImage"
+        android:layout_width="379dp"
+        android:layout_height="367dp"
+        android:src="@drawable/welcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/welcomeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:layout_marginEnd="87dp"
+        android:fontFamily="@font/bree_serif"
+        android:text="@string/welcome"
+        android:textColor="@color/main_green"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeImage"
+        app:layout_constraintStart_toStartOf="@+id/welcomeImage"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeImage" />
+
+    <TextView
+        android:id="@+id/welcomeTextTV"
+        android:layout_width="364dp"
+        android:layout_height="58dp"
+        android:fontFamily="@font/bree_serif"
+        android:gravity="center"
+        android:text="@string/welcome_text"
+        android:textColor="@color/main_green"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeTV"
+        app:layout_constraintStart_toStartOf="@+id/welcomeTV"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTV" />
+
+    <Button
+        android:id="@+id/welcomeLoginBtn"
+        android:layout_width="255dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="55dp"
+        android:fontFamily="@font/bree_serif"
+        android:text="@string/login"
+        android:textColor="@color/beige"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeTextTV"
+        app:layout_constraintStart_toStartOf="@+id/welcomeTextTV"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextTV" />
+
+    <Button
+        android:id="@+id/welcomeSignupBtn"
+        android:layout_width="255dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/bree_serif"
+        android:text="@string/sign_up"
+        android:textColor="@color/beige"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeLoginBtn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/welcomeLoginBtn"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeLoginBtn" />
+
+    <TextView
+        android:id="@+id/welcomeComtTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/bree_serif"
+        android:gravity="center"
+        android:text="@string/continue_as"
+        android:textColor="@color/main_green"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/welcome_guest"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/welcomeSignupBtn"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeSignupBtn" />
+
+    <TextView
+        android:id="@+id/welcome_guest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:fontFamily="@font/bree_serif"
+        android:gravity="center"
+        android:text="@string/guest"
+        android:textColor="@color/guest_red"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/welcomeComtTV"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeSignupBtn"
+        app:layout_constraintTop_toTopOf="@+id/welcomeComtTV" />
+</androidx.constraintlayout.widget.ConstraintLayout>
