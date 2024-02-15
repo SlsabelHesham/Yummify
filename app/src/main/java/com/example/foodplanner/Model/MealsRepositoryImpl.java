@@ -24,8 +24,8 @@ public class MealsRepositoryImpl implements MealRepository {
         return repository;
     }
     @Override
-    public LiveData<List<Meal>> getStoredMeals() {
-        return mealsLocalDataSource.getAllStoredMeals();
+    public LiveData<List<Meal>> getStoredMeals(String email) {
+        return mealsLocalDataSource.getAllStoredMeals(email);
     }
 
     @Override

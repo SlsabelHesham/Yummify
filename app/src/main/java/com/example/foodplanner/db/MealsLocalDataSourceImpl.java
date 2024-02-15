@@ -19,7 +19,6 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
     private MealsLocalDataSourceImpl(Context context) {
         AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
         mealsDAO = db.getMealsDAO();
-        storedMeals = mealsDAO.getAllMeals();
     }
     public static MealsLocalDataSourceImpl getInstance(Context context){
         if (mealsLocalDataSourceImpl == null) {
@@ -43,7 +42,8 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
     }
 
     @Override
-    public LiveData<List<Meal>> getAllStoredMeals() {
+    public LiveData<List<Meal>> getAllStoredMeals(String email) {
+        storedMeals = mealsDAO.getAllMeals(email);
         return storedMeals;
     }
 

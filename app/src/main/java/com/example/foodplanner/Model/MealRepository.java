@@ -7,7 +7,7 @@ import com.example.foodplanner.Network.NetworkCallback;
 import java.util.List;
 
 public interface MealRepository {
-    public LiveData<List<Meal>> getStoredMeals();
+    public LiveData<List<Meal>> getStoredMeals(String email);
 
     public void getAllRandoms(NetworkCallback networkCallBack);
 

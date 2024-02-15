@@ -8,11 +8,11 @@ import com.example.foodplanner.Model.Meal;
 import java.util.List;
 
 public interface MealsLocalDataSource {
-    void insertMeal(Meal product);
+    void insertMeal(Meal meal);
 
-    void deleteMeal(Meal product);
+    void deleteMeal(Meal meal);
 
-    LiveData<List<Meal>> getAllStoredMeals();
+    LiveData<List<Meal>> getAllStoredMeals(String email);
 
     public boolean checkMealExist(String mealId);
 }

@@ -20,8 +20,8 @@ public class FavMealsPresenterImpl implements FavMealsPresenter {
     }
 
     @Override
-    public LiveData<List<Meal>> getStoredMeals() {
-        return repository.getStoredMeals();
+    public LiveData<List<Meal>> getStoredMeals(String email) {
+        return repository.getStoredMeals(email);
     }
 
     @Override

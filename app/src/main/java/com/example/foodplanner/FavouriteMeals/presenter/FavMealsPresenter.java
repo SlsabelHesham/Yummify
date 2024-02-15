@@ -8,6 +8,6 @@ import com.example.foodplanner.Model.Meal;
 import java.util.List;
 
 public interface FavMealsPresenter {
-    public LiveData<List<Meal>> getStoredMeals();
+    public LiveData<List<Meal>> getStoredMeals(String email);
     public void removeFromFav(Meal meal);
 }

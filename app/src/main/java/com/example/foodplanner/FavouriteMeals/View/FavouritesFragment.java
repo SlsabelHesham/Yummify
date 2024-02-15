@@ -24,6 +24,8 @@ import com.example.foodplanner.Model.MealsRepositoryImpl;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.R;
 import com.example.foodplanner.db.MealsLocalDataSourceImpl;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +61,13 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
         favMealsAdapter = new FavMealsAdapter(view.getContext() , new ArrayList<>() , this);
         favRecyclerView.setAdapter(favMealsAdapter);
         favRecyclerView.setLayoutManager(layoutManager);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user != null ? user.getEmail() : null;
 
         favMealsPresenter = new FavMealsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));
 
-        mealsList = favMealsPresenter.getStoredMeals();
+        mealsList = favMealsPresenter.getStoredMeals(email);
         showData(mealsList);
 
     }

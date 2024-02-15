@@ -23,6 +23,8 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.db.MealsLocalDataSourceImpl;
 import com.example.foodplanner.meal.presenter.MealPresenter;
 import com.example.foodplanner.meal.presenter.MealPresenterImpl;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MealFragment extends Fragment implements MealsView , OnMealClickListener{
     private Meal receivedObject;
@@ -179,6 +181,8 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
         mealInstructionsCard = view.findViewById(R.id.instructionsCard);
         description = view.findViewById(R.id.description);
         mealFavImage = view.findViewById(R.id.favImage);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user != null ? user.getEmail() : null;
 
         if(receivedObject.getStrCategory() != null){
             showMealDetails();
@@ -197,15 +201,16 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
                 if(!inFavourites){
                     inFavourites = true;
                     mealFavImage.setImageResource(R.drawable.favourite);
+                    receivedObject.setEmail(email);
                     onMealClickListener.onFavMealClick(receivedObject);
                     Log.i("TEST", "onClick: doneeeeeeeeeee");
-                    Toast.makeText(MealFragment.this.getContext() , "Meal Added To Favourites" , Toast.LENGTH_SHORT);
+                    Toast.makeText(MealFragment.this.getContext() , "Meal Added To Favourites" , Toast.LENGTH_SHORT).show();
                 }
                 else{
                     inFavourites = false;
                     mealFavImage.setImageResource(R.drawable.not_favourite);
                     onMealClickListener.onFavMealUnClick(receivedObject);
-                    Toast.makeText(view.getContext() , "Meal Removed From Favourites" , Toast.LENGTH_SHORT);
+                    Toast.makeText(view.getContext() , "Meal Removed From Favourites" , Toast.LENGTH_SHORT).show();
                 }
             }
         });
