@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "737512346717",
+    "project_id": "yummify-ac84a",
+    "storage_bucket": "yummify-ac84a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737512346717:android:5e9a570d0ef6cf9f73e9b4",
+        "android_client_info": {
+          "package_name": "com.example.foodplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737512346717-70lus78dgtjq1h6jc4kig59sb5rijhg3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodplanner",
+            "certificate_hash": "455548d04336e559535e0bbfde412ac7c29dab33"
+          }
+        },
+        {
+          "client_id": "737512346717-dr6simkpe2nhjbkt6rl8ui1g28k6ls9v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl33OJSTx7k4AAHKuJBN_wjuY6F8WvLD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737512346717-dr6simkpe2nhjbkt6rl8ui1g28k6ls9v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

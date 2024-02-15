@@ -37,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigation_view);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.profile_menu);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+       // actionBar.setHomeAsUpIndicator(R.drawable.profile_menu);
+      //  actionBar.setDisplayShowHomeEnabled(true);
 
 
         navController = Navigation.findNavController(this, R.id.fragmentNavHost);
