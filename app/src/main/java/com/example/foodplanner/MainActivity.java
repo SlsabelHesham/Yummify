@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.profile_menu);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+       // actionBar.setHomeAsUpIndicator(R.drawable.profile_menu);
+      //  actionBar.setDisplayShowHomeEnabled(true);
 
 
         navController = Navigation.findNavController(this, R.id.fragmentNavHost);

@@ -12,4 +12,8 @@
     <color name="beige">#D1CCB7</color>
     <color name="video_red">#54402F</color>
     <color name="guest_red">#AF4541</color>
+<<<<<<< HEAD
+=======
+    <color name="yellow">#FBC02D</color>
+>>>>>>> development
 </resources>

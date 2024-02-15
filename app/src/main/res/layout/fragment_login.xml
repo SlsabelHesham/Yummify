@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_green"
-    tools:context=".LoginFragment" >
+    tools:context=".LoginFragment">
 
     <TextView
         android:id="@+id/textView6"
@@ -23,34 +23,202 @@
 
     <View
         android:id="@+id/view2"
-        android:layout_width="381dp"
+        android:layout_width="0dp"
         android:layout_height="406dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/login_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextField"
-        android:layout_width="274dp"
-        android:layout_height="70dp"
-        android:hint="Username"
-        app:boxBackgroundColor="@color/cardview_shadow_end_color"
-        app:boxBackgroundMode="none"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxStrokeColor="@color/main_green"
-        app:boxStrokeWidth="3dp"
-        app:hintTextAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="165dp">
+        android:id="@+id/EmailLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!--this is the actual edit text which takes the input-->
+        <EditText
+            android:id="@+id/emailET"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="57dp"
+            android:background="@color/beige"
+            android:fontFamily="@font/bree_serif"
+            android:gravity="bottom"
+            android:includeFontPadding="false"
+            android:inputType="none"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/main_green"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PasswordLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:hint="Password"
+        app:layout_constraintEnd_toEndOf="@+id/EmailLayout"
+        app:layout_constraintStart_toStartOf="@+id/EmailLayout"
+        app:layout_constraintTop_toBottomOf="@+id/EmailLayout">
+
+        <!--this is the actual edit text which takes the input-->
+        <EditText
+            android:id="@+id/passwordET"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:background="@color/beige"
+            android:fontFamily="@font/bree_serif"
+            android:gravity="bottom"
+            android:includeFontPadding="false"
+            android:inputType="textPassword"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/main_green"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="273dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="39dp"
+        android:fontFamily="@font/bree_serif"
+        android:text="@string/login"
+        android:textColor="@color/beige"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/PasswordLayout"
+        app:layout_constraintStart_toStartOf="@+id/PasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordLayout" />
+
+    <TextView
+        android:id="@+id/forgetPasswordTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/bree_serif"
+        android:text="@string/forget_your_password"
+        android:textColor="@color/main_green"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/loginBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+    <TextView
+        android:id="@+id/orTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/bree_serif"
+        android:text="@string/or"
+        android:textColor="@color/beige"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/login_card"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/orTV" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/view3">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/bree_serif"
+            android:gravity="end"
+            android:text="Continue With Google"
+            android:textColor="@color/main_green"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/google_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/view3">
+
+        <TextView
+            android:id="@+id/textView90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/bree_serif"
+            android:gravity="end"
+            android:text="@string/don_t_have_an_account"
+            android:textColor="@color/beige"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView900"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/bree_serif"
+            android:gravity="end"
+            android:text="@string/sign_up"
+            android:textColor="@color/yellow"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
