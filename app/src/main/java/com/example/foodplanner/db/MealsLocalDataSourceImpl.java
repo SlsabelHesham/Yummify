@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.MealPlan;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
     MealsDAO mealsDAO;
     static MealsLocalDataSourceImpl mealsLocalDataSourceImpl;
     LiveData<List<Meal>> storedMeals;
+
+    LiveData<List<MealPlan>> storedPlan;
 
     private MealsLocalDataSourceImpl(Context context) {
         AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
@@ -42,11 +45,33 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
     }
 
     @Override
-    public LiveData<List<Meal>> getAllStoredMeals(String email) {
-        storedMeals = mealsDAO.getAllMeals(email);
-        return storedMeals;
+    public void deletePlanMeal(MealPlan mealPlan) {
+        new Thread(new Runnable() {
+            public void run() { mealsDAO.deletePlanMeal(mealPlan); }
+        }).start();
     }
 
+    @Override
+    public LiveData<List<Meal>> getAllStoredMeals(String email) {
+        storedMeals = mealsDAO.getAllMeals(email);
+        Log.i("plan", "getAllStoredMeals: "+storedMeals.getValue());
+        return storedMeals;
+    }
+    @Override
+    public LiveData<List<MealPlan>> getPlan(String email , String day) {
+        storedPlan = mealsDAO.getPlan(email , day);
+        if (storedPlan != null) {
+            List<MealPlan> mealPlanList = storedPlan.getValue();
+            if (mealPlanList != null && !mealPlanList.isEmpty()) {
+                Log.i("plan", "getPlan: " + mealPlanList.get(0).getEmail());
+            } else {
+                Log.e("plan", "getPlan: storedPlan value is null or empty");
+            }
+        } else {
+            Log.e("plan", "getPlan: storedPlan is null");
+        }
+        return storedPlan;
+    }
     @Override
     public boolean checkMealExist(String mealId) {
         final int[] count = {0};
@@ -62,5 +87,14 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
             e.printStackTrace();
         }
         return count[0] > 0;
+    }
+
+    @Override
+    public void addMealToPlan(MealPlan mealPlan) {
+        new Thread(new Runnable() {
+            public void run() {
+                mealsDAO.insertMealPlan(mealPlan);
+            }
+        }).start();
     }
 }

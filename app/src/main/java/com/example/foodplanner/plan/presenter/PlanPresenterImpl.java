@@ -1,4 +1,4 @@
-package com.example.foodplanner.FavouriteMeals.presenter;
+package com.example.foodplanner.plan.presenter;
 
 import androidx.lifecycle.LiveData;
 
@@ -7,19 +7,21 @@ import com.example.foodplanner.FavouriteMeals.View.FavouritesFragment;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.MealPlan;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
+import com.example.foodplanner.plan.view.PlanFragment;
+import com.example.foodplanner.plan.view.PlanView;
 
 import java.util.List;
 
-public class FavMealsPresenterImpl implements FavMealsPresenter {
+public class PlanPresenterImpl implements PlanPresenter {
 
     MealsRepositoryImpl repository;
-    FavMealsView view;
+    PlanView view;
 
-    public FavMealsPresenterImpl(FavouritesFragment favouritesFragment, MealsRepositoryImpl productsRepository) {
+    public PlanPresenterImpl(PlanFragment planFragment, MealsRepositoryImpl productsRepository) {
         this.repository = productsRepository;
-        this.view = favouritesFragment;
+        this.view = planFragment;
     }
-
+/*
     @Override
     public LiveData<List<Meal>> getStoredMeals(String email) {
         return repository.getStoredMeals(email);
@@ -28,6 +30,16 @@ public class FavMealsPresenterImpl implements FavMealsPresenter {
     @Override
     public void removeFromFav(Meal meal) {
         repository.deleteMeal(meal);
+    }*/
+
+    @Override
+    public LiveData<List<MealPlan>> getWeekPlan(String email , String day) {
+        return repository.getPlan(email , day);
+    }
+
+    @Override
+    public void removeFromPlan(MealPlan mealPlan) {
+        repository.deletePlanMeal(mealPlan);
     }
 
     @Override

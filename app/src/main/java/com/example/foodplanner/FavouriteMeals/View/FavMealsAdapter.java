@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.MealPlan;
 import com.example.foodplanner.R;
 
 import java.io.Serializable;
@@ -28,11 +30,14 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHo
     Context context;
     List<Meal> meals;
 
+    String day = null , email = null;
     OnFavoriteClickListener listener;
-    public FavMealsAdapter(Context context , List<Meal> meals , OnFavoriteClickListener listener) {
+    public FavMealsAdapter(Context context , List<Meal> meals , OnFavoriteClickListener listener, String day, String email) {
         this.context = context;
         this.meals = meals;
         this.listener = listener;
+        this.day = day;
+        this.email = email;
     }
 
     @NonNull
@@ -62,13 +67,21 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHo
         holder.mealFavLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavController navController = Navigation.findNavController((Activity) context , R.id.fragmentNavHost);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("meal", (Serializable) meal);
-                navController.navigate(R.id.action_favouritesFragment_to_mealFragment, bundle);
+                if(day == null){
+                    NavController navController = Navigation.findNavController((Activity) context , R.id.fragmentNavHost);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("meal", (Serializable) meal);
+                    navController.navigate(R.id.action_favouritesFragment_to_mealFragment, bundle);
+                }
+                else{
+                    MealPlan mealPlan = new MealPlan(email , day , meal);
+                    listener.addToPlan(mealPlan);
+                    Toast.makeText(view.getContext(),"Meal added to "+day+" plan",Toast.LENGTH_SHORT).show();
+                    NavController navController = Navigation.findNavController((Activity) context , R.id.fragmentNavHost);
+                    navController.navigate(R.id.action_favouritesFragment_to_planFragment);
+                }
             }
         });
-           Log.i(TAG, "***** onBindViewHolder *****");
     }
 
     @Override

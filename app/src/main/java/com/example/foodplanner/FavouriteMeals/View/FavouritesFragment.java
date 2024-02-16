@@ -20,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.FavouriteMeals.presenter.FavMealsPresenter;
 import com.example.foodplanner.FavouriteMeals.presenter.FavMealsPresenterImpl;
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.MealPlan;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.R;
@@ -39,6 +40,7 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
     FavMealsPresenter favMealsPresenter;
     LottieAnimationView favouriteAnimationView;
     TextView noFavouritesTV;
+    String day =null , email = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,16 +55,20 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if(getArguments()!=null){
+            day = getArguments().getString("day");
+            Log.i("TEST", "onViewCreated: "+day);
+        }
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user != null ? user.getEmail() : null;
         favRecyclerView = view.findViewById(R.id.favRecyclerView);
         noFavouritesTV = view.findViewById(R.id.noFavouritesTV);
         favouriteAnimationView = view.findViewById(R.id.favouriteAnimation);
         layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        favMealsAdapter = new FavMealsAdapter(view.getContext() , new ArrayList<>() , this);
+        favMealsAdapter = new FavMealsAdapter(view.getContext(), new ArrayList<>(), this, day , email);
         favRecyclerView.setAdapter(favMealsAdapter);
         favRecyclerView.setLayoutManager(layoutManager);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String email = user != null ? user.getEmail() : null;
 
         favMealsPresenter = new FavMealsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));
@@ -77,8 +83,13 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
     }
 
     @Override
-    public void showData(LiveData<List<Meal>> products) {
-        products.observe(this , new Observer<List<Meal>>() {
+    public void addToPlan(MealPlan mealPlan) {
+        favMealsPresenter.addMealToPlan(mealPlan);
+    }
+
+    @Override
+    public void showData(LiveData<List<Meal>> mealsList) {
+        mealsList.observe(this , new Observer<List<Meal>>() {
             @Override
             public void onChanged(List<Meal> meals) {
                 favMealsAdapter.updateData(meals);
@@ -86,7 +97,7 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
                     favouriteAnimationView.setVisibility(View.GONE);
                     noFavouritesTV.setVisibility(View.GONE);
                 } else {
-                    Log.i("TESTT", "Sadma: ");
+                    Log.i("TEST", "testAnimation: ");
                     favouriteAnimationView.setVisibility(View.VISIBLE);
                     noFavouritesTV.setVisibility(View.VISIBLE);
                 }

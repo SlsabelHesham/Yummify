@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (item.getItemId() == R.id.favouritesFragment) {
             navController.navigate(R.id.action_homeFragment_to_favouritesFragment);
+        } else if (item.getItemId() == R.id.planFragment) {
+            navController.navigate(R.id.action_homeFragment_to_planFragment);
         }
         return super.onOptionsItemSelected(item);
     }

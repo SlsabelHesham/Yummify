@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_homeFragment_to_favouritesFragment"
             app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_planFragment"
+            app:destination="@id/planFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -70,6 +73,13 @@
         <action
             android:id="@+id/action_favouritesFragment_to_mealFragment"
             app:destination="@id/mealFragment" />
+        <argument
+            android:name="day"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_planFragment"
+            app:destination="@id/planFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -94,7 +104,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.foodplanner.LoginFragment"
+        android:name="com.example.foodplanner.authentication.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -106,7 +116,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.foodplanner.SignupFragment"
+        android:name="com.example.foodplanner.authentication.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
@@ -115,5 +125,17 @@
         <action
             android:id="@+id/action_signupFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.foodplanner.plan.view.PlanFragment"
+        android:label="fragment_plan"
+        tools:layout="@layout/fragment_plan" >
+        <action
+            android:id="@+id/action_planFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_planFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
     </fragment>
 </navigation>

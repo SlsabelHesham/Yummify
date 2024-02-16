@@ -9,6 +9,7 @@ import androidx.room.Query;
 
 
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.MealPlan;
 
 import java.util.List;
 
@@ -17,11 +18,20 @@ import java.util.List;
 public interface MealsDAO {
     @Query("SELECT * FROM meals_table WHERE email = :email")
     LiveData<List<Meal>> getAllMeals(String email);
+
+    @Query("SELECT * FROM meals_plan_table WHERE email = :email and day = :day")
+    LiveData<List<MealPlan>> getPlan(String email , String day);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMeal (Meal meal);
     @Delete
     void deleteMeal (Meal meal);
 
+    @Delete
+    void deletePlanMeal (MealPlan mealPlan);
+
     @Query("SELECT COUNT(*) FROM meals_table WHERE idMeal = :mealId")
      int checkIfMealExists(String mealId);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertMealPlan (MealPlan mealPlan);
 }

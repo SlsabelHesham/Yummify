@@ -27,12 +27,9 @@ import java.util.List;
 
 
 public class CategoryFragment extends Fragment implements CategoryView {
-
-
     RecyclerView categoryRecyclerView;
     GridLayoutManager  layoutManager;
     CategoryAdapter categoryAdapter;
-
     CategoryPresenter categoryPresenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -7,6 +7,8 @@
         android:icon="@drawable/home_cards"
         android:title="@string/my_favourites_menu_item" />
 
-    <item android:title="@string/weekly_plan" />
+    <item
+        android:id="@+id/planFragment"
+        android:title="@string/weekly_plan" />
     <item android:title="@string/logout" />
 </menu>

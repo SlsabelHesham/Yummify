@@ -29,6 +29,10 @@ public class MealsRepositoryImpl implements MealRepository {
     }
 
     @Override
+    public LiveData<List<MealPlan>> getPlan(String email, String day) {
+        return mealsLocalDataSource.getPlan(email , day);
+    }
+    @Override
     public void getAllRandoms(NetworkCallback networkCallBack) {
         for(int i= 0; i<20;i++){
             mealsRemoteDataSource.makeNetworkCallack(networkCallBack , "random");
@@ -64,6 +68,15 @@ public class MealsRepositoryImpl implements MealRepository {
     @Override
     public void deleteMeal(Meal meal) {
         mealsLocalDataSource.deleteMeal(meal);
+    }
+
+    @Override
+    public void deletePlanMeal(MealPlan mealPlan) {
+        mealsLocalDataSource.deletePlanMeal(mealPlan);
+    }
+    @Override
+    public void addMealToPlan(MealPlan mealPlan) {
+        mealsLocalDataSource.addMealToPlan(mealPlan);
     }
 
     @Override
