@@ -10,6 +10,10 @@ import com.example.foodplanner.Model.MealsRepositoryImpl;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class FavMealsPresenterImpl implements FavMealsPresenter {
 
     MealsRepositoryImpl repository;
@@ -21,13 +25,15 @@ public class FavMealsPresenterImpl implements FavMealsPresenter {
     }
 
     @Override
-    public LiveData<List<Meal>> getStoredMeals(String email) {
+    public Flowable<List<Meal>> getStoredMeals(String email) {
         return repository.getStoredMeals(email);
     }
 
     @Override
     public void removeFromFav(Meal meal) {
-        repository.deleteMeal(meal);
+        Completable completable = repository.deleteMeal(meal);
+        completable.subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override

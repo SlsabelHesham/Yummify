@@ -30,12 +30,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
+
 public class PlanFragment extends Fragment implements PlanView , OnPlanClickListener {
 
     WeekItem saturday , sunday,monday,tuesday,wednesday,thursday,friday;
     List<WeekItem> itemList = new ArrayList<>();
     PlanPresenter planPresenter;
-    LiveData<List<MealPlan>> plan;
+    Flowable<List<MealPlan>> plan;
     String email;
     WeekItemAdapter weekItemAdapter;
 
@@ -136,89 +139,91 @@ public class PlanFragment extends Fragment implements PlanView , OnPlanClickList
 
 
     @Override
-    public void showSaturdayData(LiveData<List<MealPlan>> mealPlan) {
+    public void showSaturdayData(Flowable<List<MealPlan>> mealPlan) {
         Log.i("plan", "showData: ");
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                saturday = new WeekItem("Saturday", mealPlanList);
-                itemList.set(0 , saturday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    saturday = new WeekItem("Saturday", mealPlanList);
+                    itemList.set(0 , saturday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
     }
     @Override
-    public void showSundayData(LiveData<List<MealPlan>> mealPlan) {
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                sunday = new WeekItem("Sunday", mealPlanList);
-                itemList.set(1 , sunday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+    public void showSundayData(Flowable<List<MealPlan>> mealPlan) {
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    sunday = new WeekItem("Sunday", mealPlanList);
+                    itemList.set(1 , sunday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
     }
     @Override
-    public void showMondayData(LiveData<List<MealPlan>> mealPlan) {
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                monday = new WeekItem("Monday", mealPlanList);
-                itemList.set(2 , monday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+    public void showMondayData(Flowable<List<MealPlan>> mealPlan) {
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    monday = new WeekItem("Monday", mealPlanList);
+                    itemList.set(2 , monday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
+
+
     }
     @Override
-    public void showTuesdayData(LiveData<List<MealPlan>> mealPlan) {
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                tuesday = new WeekItem("Tuesday", mealPlanList);
-                itemList.set(3 , tuesday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+    public void showTuesdayData(Flowable<List<MealPlan>> mealPlan) {
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    tuesday = new WeekItem("Tuesday", mealPlanList);
+                    itemList.set(3 , tuesday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
+
+
     }
     @Override
-    public void showWednesdayData(LiveData<List<MealPlan>> mealPlan) {
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                wednesday = new WeekItem("Wednesday", mealPlanList);
-                itemList.set(4 , wednesday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+    public void showWednesdayData(Flowable<List<MealPlan>> mealPlan) {
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    wednesday = new WeekItem("Wednesday", mealPlanList);
+                    itemList.set(4 , wednesday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
+
     }
     @Override
-    public void showThursdayData(LiveData<List<MealPlan>> mealPlan) {
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                thursday = new WeekItem("Thursday", mealPlanList);
-                itemList.set(5 , thursday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+    public void showThursdayData(Flowable<List<MealPlan>> mealPlan) {
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    thursday = new WeekItem("Thursday", mealPlanList);
+                    itemList.set(5 , thursday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
+
+
     }
     @Override
-    public void showFridayData(LiveData<List<MealPlan>> mealPlan) {
-        mealPlan.observe(this , new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlanList) {
-                friday = new WeekItem("Friday", mealPlanList);
-                itemList.set(6 , friday);
-                weekItemAdapter.updateData(itemList);
-                weekItemAdapter.notifyDataSetChanged();
-            }
-        });
+    public void showFridayData(Flowable<List<MealPlan>> mealPlan) {
+        mealPlan.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealPlanList -> {
+                    friday = new WeekItem("Friday", mealPlanList);
+                    itemList.set(6 , friday);
+                    weekItemAdapter.updateData(itemList);
+                    weekItemAdapter.notifyDataSetChanged();
+
+                });
+
+
     }
     @Override
     public void removeMeal(MealPlan mealPlan) {
@@ -232,7 +237,7 @@ public class PlanFragment extends Fragment implements PlanView , OnPlanClickList
 
     @Override
     public void addToPlan(MealPlan mealPlan) {
-
+        planPresenter.addMealToPlan(mealPlan);
     }
     @Override
     public void onDeleteMealPlanClick(MealPlan mealPlan) {

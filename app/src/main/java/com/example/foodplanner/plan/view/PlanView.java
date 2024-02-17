@@ -7,21 +7,24 @@ import com.example.foodplanner.Model.MealPlan;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+import kotlinx.coroutines.flow.Flow;
+
 
 public interface PlanView {
-    void showSaturdayData(LiveData<List<MealPlan>> mealPlan);
+    void showSaturdayData(Flowable<List<MealPlan>> mealPlan);
 
-    void showSundayData(LiveData<List<MealPlan>> mealPlan);
+    void showSundayData(Flowable<List<MealPlan>> mealPlan);
 
-    void showMondayData(LiveData<List<MealPlan>> mealPlan);
+    void showMondayData(Flowable<List<MealPlan>> mealPlan);
 
-    void showTuesdayData(LiveData<List<MealPlan>> mealPlan);
+    void showTuesdayData(Flowable<List<MealPlan>> mealPlan);
 
-    void showWednesdayData(LiveData<List<MealPlan>> mealPlan);
+    void showWednesdayData(Flowable<List<MealPlan>> mealPlan);
 
-    void showThursdayData(LiveData<List<MealPlan>> mealPlan);
+    void showThursdayData(Flowable<List<MealPlan>> mealPlan);
 
-    void showFridayData(LiveData<List<MealPlan>> mealPlan);
+    void showFridayData(Flowable<List<MealPlan>> mealPlan);
 
     public void removeMeal(MealPlan mealPlan);
 

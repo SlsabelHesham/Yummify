@@ -1,35 +1,40 @@
 package com.example.foodplanner.Model;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.foodplanner.Network.NetworkCallback;
-
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+
 public interface MealRepository {
-    public LiveData<List<Meal>> getStoredMeals(String email);
+    Observable getAllRandoms();
+    Observable getAllCategories();
+    Observable getAllCountries();
+    Observable getMeal(String mealName);
+    Observable getAllMeals(String categoryName);
 
-    LiveData<List<MealPlan>> getPlan(String email , String day);
+    Observable getAllCountryMeals(String countryMeal);
+    Observable getAllIngredients();
 
-    public void getAllRandoms(NetworkCallback networkCallBack);
-    public void getAllCategories(NetworkCallback networkCallBack);
-    public void getAllCountries(NetworkCallback networkCallBack);
-    public void getAllIngredients(NetworkCallback networkCallBack);
+    Observable getAllIngredientMeals(String ingredientMeal);
 
-    //void getMealsByName(NetworkCallback networkCallBack, String mealName);
 
-    public void getAllMeals(NetworkCallback networkCallBack , String categoryName);
-    public void getAllCountryMeals(NetworkCallback networkCallBack , String countryMeal);
 
-    void getAllIngredientMeals(NetworkCallback networkCallBack, String ingredientMeal);
 
-    public void getMeal(NetworkCallback networkCallBack , String mealName);
-    public void insertMeal(Meal meal);
-    public void deleteMeal(Meal meal);
-    public void deletePlanMeal(MealPlan mealPlan);
-    public boolean checkMealExist(String mealId);
+    ////// Roooooooom
+    Flowable<List<Meal>> getStoredMeals(String email);
+    Completable insertMeal(Meal meal);
+    Completable deleteMeal(Meal meal);
+    Single<Boolean> checkMealExist(String mealId);
 
-    public void addMealToPlan(MealPlan mealPlan);
-    public void deletePlan(String email);
 
+
+
+
+    Flowable<List<MealPlan>> getPlan(String email , String day);
+    Completable deletePlanMeal(MealPlan mealPlan);
+    Completable addMealToPlan(MealPlan mealPlan);
+    Completable deletePlan(String email);
 }

@@ -83,9 +83,11 @@ public class CountryFragment extends Fragment implements CountryView{
                 if(chip != null){
                     String chipText = chip.getText().toString();
                     Log.i("test", "onCheckedChanged: "+ chipText);
+                    /*
                     allMealsPresenter = new AllMealsPresenterImpl(CountryFragment.this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                             MealsLocalDataSourceImpl.getInstance(view.getContext())));
-                    allMealsPresenter.getAllCountryMeals(chipText);
+                    */
+                    countryPresenter.getAllCountryMeals(chipText);
                 }
             }
         });

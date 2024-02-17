@@ -11,13 +11,17 @@ import com.example.foodplanner.Model.MealPlan;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
+
 public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
 
     MealsDAO mealsDAO;
     static MealsLocalDataSourceImpl mealsLocalDataSourceImpl;
-    LiveData<List<Meal>> storedMeals;
+    Flowable<List<Meal>> storedMeals;
 
-    LiveData<List<MealPlan>> storedPlan;
+    Flowable<List<MealPlan>> storedPlan;
 
     private MealsLocalDataSourceImpl(Context context) {
         AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
@@ -31,81 +35,50 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
     }
 
     @Override
-    public void insertMeal(Meal meal) {
-        new Thread(new Runnable() {
-            public void run() { mealsDAO.insertMeal(meal); }
-        }).start();
-    }
-
-    @Override
-    public void deleteMeal(Meal meal) {
-        new Thread(new Runnable() {
-            public void run() { mealsDAO.deleteMeal(meal); }
-        }).start();
-    }
-
-    @Override
-    public void deletePlanMeal(MealPlan mealPlan) {
-        new Thread(new Runnable() {
-            public void run() {
-                mealsDAO.deletePlanMeal(mealPlan);
-            }
-        }).start();
-    }
-
-    @Override
-    public void deletePlan(String email) {
-        new Thread(new Runnable() {
-            public void run() {
-                mealsDAO.deletePlan(email);
-            }
-        }).start();
-    }
-
-    @Override
-    public LiveData<List<Meal>> getAllStoredMeals(String email) {
+    public Flowable<List<Meal>> getAllStoredMeals(String email) {
         storedMeals = mealsDAO.getAllMeals(email);
-        Log.i("plan", "getAllStoredMeals: "+storedMeals.getValue());
         return storedMeals;
     }
     @Override
-    public LiveData<List<MealPlan>> getPlan(String email , String day) {
+    public Flowable<List<MealPlan>> getPlan(String email , String day) {
         storedPlan = mealsDAO.getPlan(email , day);
-        if (storedPlan != null) {
-            List<MealPlan> mealPlanList = storedPlan.getValue();
-            if (mealPlanList != null && !mealPlanList.isEmpty()) {
-                Log.i("plan", "getPlan: " + mealPlanList.get(0).getEmail());
-            } else {
-                Log.e("plan", "getPlan: storedPlan value is null or empty");
-            }
-        } else {
-            Log.e("plan", "getPlan: storedPlan is null");
-        }
         return storedPlan;
     }
-    @Override
-    public boolean checkMealExist(String mealId) {
-        final int[] count = {0};
 
-        new Thread(new Runnable() {
-            public void run() {
-                count[0] = mealsDAO.checkIfMealExists(mealId);
-            }
-        }).start();
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return count[0] > 0;
+
+
+
+    @Override
+    public Completable insertMeal(Meal meal) {
+        Completable completable = mealsDAO.insertMeal(meal);
+        return completable;
     }
 
     @Override
-    public void addMealToPlan(MealPlan mealPlan) {
-        new Thread(new Runnable() {
-            public void run() {
-                mealsDAO.insertMealPlan(mealPlan);
-            }
-        }).start();
+    public Completable deleteMeal(Meal meal) {
+        Completable completable = mealsDAO.deleteMeal(meal);
+        return completable;
+    }
+
+    @Override
+    public Single<Integer> checkMealExist(String mealId) {
+        return mealsDAO.checkIfMealExists(mealId);
+    }
+
+    @Override
+    public Completable deletePlanMeal(MealPlan mealPlan) {
+        Completable completable = mealsDAO.deletePlanMeal(mealPlan);
+        return completable;
+    }
+    @Override
+    public Completable deletePlan(String email) {
+        Completable completable = mealsDAO.deletePlan(email);
+        return completable;
+    }
+
+    @Override
+    public Completable addMealToPlan(MealPlan mealPlan) {
+        Completable completable = mealsDAO.insertMealPlan(mealPlan);
+        return completable;
     }
 }

@@ -1,34 +1,25 @@
 package com.example.foodplanner.Network;
 
-
 import com.example.foodplanner.Model.MealResponse;
-
-import retrofit2.Call;
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MealService {
     @GET("random.php")
-    Call<MealResponse> getRandom();
-
+    Observable<MealResponse> getRandom();
     @GET("categories.php")
-    Call<MealResponse> getCategories();
-
-    @GET("filter.php")
-    Call<MealResponse> getAllMeals(@Query("c") String category);
-
+    Observable<MealResponse> getCategories();
+    @GET("list.php")
+    Observable<MealResponse> getCountries(@Query("a") String countryList);
     @GET("search.php")
-    Call<MealResponse> getMealDetails(@Query("s") String category);
-
-    @GET("list.php")
-    Call<MealResponse> getCountries(@Query("a") String countryList);
-    @GET("list.php")
-    Call<MealResponse> getIngredients(@Query("i") String ingredientList);
-
+    Observable<MealResponse> getMealDetails(@Query("s") String mealName);
     @GET("filter.php")
-    Call<MealResponse> getAllCountryMeals(@Query("a") String area);
-
+    Observable<MealResponse> getAllMeals(@Query("c") String categoryName);
     @GET("filter.php")
-    Call<MealResponse> getAllIngredientMeals(@Query("i") String ingredient);
-
+    Observable<MealResponse> getAllCountryMeals(@Query("a") String area);
+    @GET("list.php")
+    Observable<MealResponse> getIngredients(@Query("i") String ingredientList);
+    @GET("filter.php")
+    Observable<MealResponse> getAllIngredientMeals(@Query("i") String ingredient);
 }

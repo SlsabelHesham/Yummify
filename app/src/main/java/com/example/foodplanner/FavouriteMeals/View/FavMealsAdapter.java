@@ -71,6 +71,7 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHo
                     NavController navController = Navigation.findNavController((Activity) context , R.id.fragmentNavHost);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("meal", (Serializable) meal);
+                    Log.i("TAG", "onClick: "+meal.getIdMeal());
                     navController.navigate(R.id.action_favouritesFragment_to_mealFragment, bundle);
                 }
                 else{

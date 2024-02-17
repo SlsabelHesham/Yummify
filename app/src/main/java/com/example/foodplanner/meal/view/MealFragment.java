@@ -1,6 +1,8 @@
 package com.example.foodplanner.meal.view;
 
 import static android.view.View.VISIBLE;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +28,17 @@ import com.example.foodplanner.meal.presenter.MealPresenterImpl;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MealFragment extends Fragment implements MealsView , OnMealClickListener{
     private Meal receivedObject;
 
-    boolean inFavourites = false;
+    boolean inFavourites;
+    Single<Boolean> checkMealObservable;
     private WebView webView;
     String embedHtml;
     OnMealClickListener onMealClickListener;
@@ -77,11 +86,15 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             receivedObject = (Meal) getArguments().getSerializable("meal");
+            Log.i("TAG", "onCreate: "+receivedObject.getIdMeal());
             mealPresenter = new MealPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                     MealsLocalDataSourceImpl.getInstance(getContext())));
-            if (receivedObject.getStrYoutube() == null) {
-                mealPresenter.getMealDetails(receivedObject.getStrMeal());
-            }
+            checkMealObservable = mealPresenter.checkMealExist(receivedObject.getIdMeal());
+checkMeal(checkMealObservable);
+            //if (receivedObject.getStrYoutube() == null) {
+              //  mealPresenter.getMealDetails(receivedObject.getStrMeal());
+            //}
+
             onMealClickListener = this;
         }
     }
@@ -94,6 +107,7 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
         return view;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mealName = view.findViewById(R.id.mealName);
@@ -183,18 +197,25 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
         mealFavImage = view.findViewById(R.id.favImage);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user != null ? user.getEmail() : null;
+        mealPresenter.getMealDetails(receivedObject.getStrMeal());
+        /*
 
         if(receivedObject.getStrCategory() != null){
-            showMealDetails();
+            checkMeal(checkMealObservable);
+            if(inFavourites) {
+                Log.i("sora", "true ");
+                mealFavImage.setImageResource(R.drawable.favourite);
+            }
+        }
+        else{
+            checkMeal(checkMealObservable);
+            if(inFavourites){
+                Log.i("sora", "true ");
+                mealFavImage.setImageResource(R.drawable.favourite);
+            }
         }
 
-        inFavourites = mealPresenter.checkMealExist(receivedObject.getIdMeal());
-        if(inFavourites){
-            Log.i("sora", "true ");
-            mealFavImage.setImageResource(R.drawable.favourite);
-        }
-
-
+        */
         mealFavImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -356,22 +377,46 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
             }
         });
     }
+    @SuppressLint("CheckResult")
+    public void checkMeal(Single<Boolean> checkMealObservable){
+        checkMealObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        mealExists -> {
+                            if (mealExists) {
+                                inFavourites = true;
+                            } else {
+                                inFavourites = false;
+                            }
+                        }
+                );
+    }
     public void showMealDetails(){
-        inFavourites = mealPresenter.checkMealExist(receivedObject.getIdMeal());
-        if(inFavourites){
-            Log.i("sora", "trueueueueueu ");
-            mealFavImage.setImageResource(R.drawable.favourite);
-        }
         showVideo();
         showMeal();
         showInstructions();
         showIngredient();
+        if(inFavourites){
+            Log.i("sora", "trueueueueueu ");
+            mealFavImage.setImageResource(R.drawable.favourite);
+            Log.i("sora", "showMealDetails: ");
+        }
+        else{
+            Log.i("sora", "showMealDetails: in else");
+        }
     }
 
     @Override
-    public void showData(Meal meal) {
-        receivedObject = meal;
-        Log.i("TAG", "showData: " + meal.getStrMeasure1());
+    public void showData(List<Meal> meal) {
+        receivedObject = meal.get(0);
+        checkMeal(checkMealObservable);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.i("TAG", "showData: " + meal.get(0).getStrMeasure1());
         showMealDetails();
     }
 

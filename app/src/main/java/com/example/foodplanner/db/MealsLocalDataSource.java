@@ -8,17 +8,20 @@ import com.example.foodplanner.Model.MealPlan;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
+
 public interface MealsLocalDataSource {
-    void insertMeal(Meal meal);
+    Flowable<List<Meal>> getAllStoredMeals(String email);
+    Completable insertMeal(Meal meal);
+    Completable deleteMeal(Meal meal);
+    Single<Integer> checkMealExist(String mealId);
 
-    void deleteMeal(Meal meal);
-    void deletePlanMeal(MealPlan mealPlan);
 
-    void deletePlan(String email);
-    LiveData<List<Meal>> getAllStoredMeals(String email);
-    LiveData<List<MealPlan>> getPlan(String email , String day);
 
-    public boolean checkMealExist(String mealId);
-
-    void addMealToPlan(MealPlan mealPlan);
+    Flowable<List<MealPlan>> getPlan(String email , String day);
+    Completable deletePlanMeal(MealPlan mealPlan);
+    Completable deletePlan(String email);
+    Completable addMealToPlan(MealPlan mealPlan);
 }

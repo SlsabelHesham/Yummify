@@ -1,5 +1,6 @@
 package com.example.foodplanner.FavouriteMeals.View;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,19 +26,25 @@ import com.example.foodplanner.Model.MealsRepositoryImpl;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.R;
 import com.example.foodplanner.db.MealsLocalDataSourceImpl;
+import com.example.foodplanner.plan.presenter.PlanPresenter;
+import com.example.foodplanner.plan.presenter.PlanPresenterImpl;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
+
 public class FavouritesFragment extends Fragment implements FavMealsView, OnFavoriteClickListener {
 
     RecyclerView favRecyclerView;
     LinearLayoutManager layoutManager;
     FavMealsAdapter favMealsAdapter;
-    LiveData<List<Meal>> mealsList;
+    Flowable<List<Meal>> mealsList;
     FavMealsPresenter favMealsPresenter;
+    PlanPresenter planPresenter;
     LottieAnimationView favouriteAnimationView;
     TextView noFavouritesTV;
     String day =null , email = null;
@@ -70,6 +77,9 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
         favRecyclerView.setAdapter(favMealsAdapter);
         favRecyclerView.setLayoutManager(layoutManager);
 
+        planPresenter = new PlanPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
+                MealsLocalDataSourceImpl.getInstance(view.getContext())));
+
         favMealsPresenter = new FavMealsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));
 
@@ -84,25 +94,24 @@ public class FavouritesFragment extends Fragment implements FavMealsView, OnFavo
 
     @Override
     public void addToPlan(MealPlan mealPlan) {
-        favMealsPresenter.addMealToPlan(mealPlan);
+        planPresenter.addMealToPlan(mealPlan);
     }
 
+    @SuppressLint("CheckResult")
     @Override
-    public void showData(LiveData<List<Meal>> mealsList) {
-        mealsList.observe(this , new Observer<List<Meal>>() {
-            @Override
-            public void onChanged(List<Meal> meals) {
-                favMealsAdapter.updateData(meals);
-                if (meals != null && !meals.isEmpty()) {
-                    favouriteAnimationView.setVisibility(View.GONE);
-                    noFavouritesTV.setVisibility(View.GONE);
-                } else {
-                    Log.i("TEST", "testAnimation: ");
-                    favouriteAnimationView.setVisibility(View.VISIBLE);
-                    noFavouritesTV.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+    public void showData(Flowable<List<Meal>> mealsList) {
+        mealsList.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealList -> {
+                    favMealsAdapter.updateData(mealList);
+                    if (mealList != null && !mealList.isEmpty()) {
+                        favouriteAnimationView.setVisibility(View.GONE);
+                        noFavouritesTV.setVisibility(View.GONE);
+                    } else {
+                        Log.i("TESTT", "Sadma: ");
+                        favouriteAnimationView.setVisibility(View.VISIBLE);
+                        noFavouritesTV.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     @Override
