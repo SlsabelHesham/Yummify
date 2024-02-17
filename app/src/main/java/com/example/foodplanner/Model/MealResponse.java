@@ -6,6 +6,7 @@ public class MealResponse {
     private List<Meal> meals;
     private List<Category> categories;
     private List<Country> countries;
+    private List<Ingredients> ingredients;
     private Meal meal;
 
     public List<Meal> getMeals() {

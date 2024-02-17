@@ -49,7 +49,7 @@ public class CategoryFragment extends Fragment implements CategoryView {
         categoryRecyclerView = view.findViewById(R.id.categoriesRecyclerView);
         layoutManager = new GridLayoutManager(view.getContext(), 2);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        categoryAdapter = new CategoryAdapter(view.getContext() , new ArrayList<>());
+        categoryAdapter = new CategoryAdapter(view.getContext() , new ArrayList<>() , "category");
 
         categoryPresenter = new CategoryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));

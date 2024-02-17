@@ -1,5 +1,7 @@
 package com.example.foodplanner.AllMeals.presenter;
 
+import com.example.foodplanner.search.view.AllCountryMealsFragment;
+import com.example.foodplanner.search.view.AllIngredientMealsFragment;
 import com.example.foodplanner.AllMeals.View.AllMealsFragment;
 import com.example.foodplanner.AllMeals.View.MealsView;
 import com.example.foodplanner.Model.Meal;
@@ -29,6 +31,16 @@ public class AllMealsPresenterImpl implements NetworkCallback, AllMealsPresenter
         this.countryView = countryFragment;
     }
 
+    public AllMealsPresenterImpl(AllCountryMealsFragment allCountryMealsFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = allCountryMealsFragment;
+    }
+
+    public AllMealsPresenterImpl(AllIngredientMealsFragment allIngredientMealsFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = allIngredientMealsFragment;
+    }
+
 
     @Override
     public void getAllMeals(String categoryName) {
@@ -38,6 +50,11 @@ public class AllMealsPresenterImpl implements NetworkCallback, AllMealsPresenter
     @Override
     public void getAllCountryMeals(String countryName) {
         repository.getAllCountryMeals(this , countryName);
+    }
+
+    @Override
+    public void getAllIngredientMeals(String ingredientName) {
+        repository.getAllIngredientMeals(this , ingredientName);
     }
 
     @Override

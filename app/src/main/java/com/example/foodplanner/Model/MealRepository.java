@@ -14,8 +14,15 @@ public interface MealRepository {
     public void getAllRandoms(NetworkCallback networkCallBack);
     public void getAllCategories(NetworkCallback networkCallBack);
     public void getAllCountries(NetworkCallback networkCallBack);
+    public void getAllIngredients(NetworkCallback networkCallBack);
+
+    //void getMealsByName(NetworkCallback networkCallBack, String mealName);
+
     public void getAllMeals(NetworkCallback networkCallBack , String categoryName);
     public void getAllCountryMeals(NetworkCallback networkCallBack , String countryMeal);
+
+    void getAllIngredientMeals(NetworkCallback networkCallBack, String ingredientMeal);
+
     public void getMeal(NetworkCallback networkCallBack , String mealName);
     public void insertMeal(Meal meal);
     public void deleteMeal(Meal meal);
@@ -23,5 +30,6 @@ public interface MealRepository {
     public boolean checkMealExist(String mealId);
 
     public void addMealToPlan(MealPlan mealPlan);
+    public void deletePlan(String email);
 
 }

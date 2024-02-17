@@ -1,4 +1,4 @@
-package com.example.foodplanner.categories.View;
+package com.example.foodplanner.search.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,9 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,23 +17,19 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.Model.Category;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.R;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
     private static final String TAG = "MyAdapter";
     Context context;
-    List<Category> categories;
-    String fragment;
+    List<Meal> mealsIngredients;
 
-    public CategoryAdapter(Context context , List<Category> categories , String fragment) {
+    public IngredientsAdapter(Context context , List<Meal> mealsIngredients) {
         this.context = context;
-        this.categories = categories;
-        this.fragment = fragment;
+        this.mealsIngredients = mealsIngredients;
     }
 
     @NonNull
@@ -43,7 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup recyclerView, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(recyclerView.getContext());
 
-        View v = inflater.inflate(R.layout.category_layout, recyclerView, false);
+        View v = inflater.inflate(R.layout.ingredient_layout, recyclerView, false);
         ViewHolder vh = new ViewHolder(v);
 
         Log.i(TAG, "onCreateViewHolder: ");
@@ -53,48 +47,43 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Category category = categories.get(position);
-        holder.categoryName.setText(category.getStrCategory());
-        Glide.with(context).load(category.getStrCategoryThumb()).into(holder.categoryImage);
+        Meal meal = mealsIngredients.get(position);
+        //holder.countryName.setText(meal.getStrIngredient());
+        Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+meal.getStrIngredient()+".png").into(holder.ingredientImage);
 
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController((Activity) context, R.id.fragmentNavHost);
                 Bundle bundle = new Bundle();
-                bundle.putString("categoryName", category.getStrCategory());
-                if(fragment.equals("search")){
-                    navController.navigate(R.id.action_searchFragment_to_allMealsFragment, bundle);
-                }
-                else{
-                    navController.navigate(R.id.action_categoryFragment_to_allMealsFragment, bundle);
-                }
+                bundle.putString("ingredientName", meal.getStrIngredient());
+                navController.navigate(R.id.action_searchFragment_to_allIngredientMealsFragment, bundle);
+
             }
         });
+
            Log.i(TAG, "***** onBindViewHolder *****");
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return mealsIngredients.size();
     }
 
-    public void updateData(List<Category> categories) {
-        this.categories = categories;
+    public void updateData(List<Meal> meals) {
+        this.mealsIngredients = meals;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView categoryName;
-        public ImageView categoryImage;
+        public ImageView ingredientImage;
         ConstraintLayout constraintLayout;
         public View layout;
         public ViewHolder (View v) {
             super(v);
             layout = v;
-            categoryName = v.findViewById(R.id.categoryName);
-            categoryImage = v.findViewById(R.id.categoryImage);
-            constraintLayout = v.findViewById(R.id.categoryLayout);
+            ingredientImage = v.findViewById(R.id.ingredientImage);
+            constraintLayout = v.findViewById(R.id.ingredientLayout);
         }
     }
 }

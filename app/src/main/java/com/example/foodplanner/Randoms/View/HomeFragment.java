@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment implements RandomView, OnRandomClickL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         randomRecyclerView = view.findViewById(R.id.my_recycler_view);
         profile_menu = view.findViewById(R.id.profile_menu);
+        search = view.findViewById(R.id.search);
         categories = view.findViewById(R.id.categoriesTV);
         countries = view.findViewById(R.id.countriesTV);
         layoutManager = new LinearLayoutManager(view.getContext());
@@ -86,6 +87,13 @@ public class HomeFragment extends Fragment implements RandomView, OnRandomClickL
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragmentNavHost);
                 navController.navigate(R.id.action_homeFragment_to_favouritesFragment);
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragmentNavHost);
+                navController.navigate(R.id.action_homeFragment_to_searchFragment);
             }
         });
 

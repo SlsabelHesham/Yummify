@@ -1,4 +1,4 @@
-package com.example.foodplanner.categories.View;
+package com.example.foodplanner.search.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,9 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,19 +21,16 @@ import com.example.foodplanner.Model.Category;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.R;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
     private static final String TAG = "MyAdapter";
     Context context;
-    List<Category> categories;
-    String fragment;
+    List<Meal> mealsCountries;
 
-    public CategoryAdapter(Context context , List<Category> categories , String fragment) {
+    public CountryAdapter(Context context , List<Meal> mealsCountries) {
         this.context = context;
-        this.categories = categories;
-        this.fragment = fragment;
+        this.mealsCountries = mealsCountries;
     }
 
     @NonNull
@@ -43,7 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup recyclerView, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(recyclerView.getContext());
 
-        View v = inflater.inflate(R.layout.category_layout, recyclerView, false);
+        View v = inflater.inflate(R.layout.country_layout, recyclerView, false);
         ViewHolder vh = new ViewHolder(v);
 
         Log.i(TAG, "onCreateViewHolder: ");
@@ -53,48 +48,42 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Category category = categories.get(position);
-        holder.categoryName.setText(category.getStrCategory());
-        Glide.with(context).load(category.getStrCategoryThumb()).into(holder.categoryImage);
+        Meal meal = mealsCountries.get(position);
+        holder.countryName.setText(meal.getStrArea());
 
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController((Activity) context, R.id.fragmentNavHost);
                 Bundle bundle = new Bundle();
-                bundle.putString("categoryName", category.getStrCategory());
-                if(fragment.equals("search")){
-                    navController.navigate(R.id.action_searchFragment_to_allMealsFragment, bundle);
-                }
-                else{
-                    navController.navigate(R.id.action_categoryFragment_to_allMealsFragment, bundle);
-                }
+                bundle.putString("countryName", meal.getStrArea());
+                navController.navigate(R.id.action_searchFragment_to_allCountryMealsFragment, bundle);
+
             }
         });
+
            Log.i(TAG, "***** onBindViewHolder *****");
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return mealsCountries.size();
     }
 
-    public void updateData(List<Category> categories) {
-        this.categories = categories;
+    public void updateData(List<Meal> meals) {
+        this.mealsCountries = meals;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView categoryName;
-        public ImageView categoryImage;
+        public TextView countryName;
         ConstraintLayout constraintLayout;
         public View layout;
         public ViewHolder (View v) {
             super(v);
             layout = v;
-            categoryName = v.findViewById(R.id.categoryName);
-            categoryImage = v.findViewById(R.id.categoryImage);
-            constraintLayout = v.findViewById(R.id.categoryLayout);
+            countryName = v.findViewById(R.id.countryName);
+            constraintLayout = v.findViewById(R.id.countryLayout);
         }
     }
 }

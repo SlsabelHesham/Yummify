@@ -25,5 +25,6 @@ public interface PlanView {
 
     public void removeMeal(MealPlan mealPlan);
 
+    public void removeWeekPlan(String email);
     public void addToPlan(MealPlan mealPlan);
 }

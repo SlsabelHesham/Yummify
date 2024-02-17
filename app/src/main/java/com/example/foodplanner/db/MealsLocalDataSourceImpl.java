@@ -47,7 +47,18 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
     @Override
     public void deletePlanMeal(MealPlan mealPlan) {
         new Thread(new Runnable() {
-            public void run() { mealsDAO.deletePlanMeal(mealPlan); }
+            public void run() {
+                mealsDAO.deletePlanMeal(mealPlan);
+            }
+        }).start();
+    }
+
+    @Override
+    public void deletePlan(String email) {
+        new Thread(new Runnable() {
+            public void run() {
+                mealsDAO.deletePlan(email);
+            }
         }).start();
     }
 

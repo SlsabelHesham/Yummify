@@ -11,5 +11,6 @@ public interface PlanPresenter {
     public LiveData<List<MealPlan>> getWeekPlan(String email , String day);
 
     public void removeFromPlan(MealPlan mealPlan);
+    public void removeWeekPlan(String email);
     public void addMealToPlan(MealPlan mealPlan);
 }

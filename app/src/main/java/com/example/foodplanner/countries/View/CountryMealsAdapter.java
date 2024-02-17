@@ -17,20 +17,18 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.Model.Category;
 import com.example.foodplanner.Model.Meal;
-import com.example.foodplanner.Model.MealResponse;
 import com.example.foodplanner.R;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
+public class CountryMealsAdapter extends RecyclerView.Adapter<CountryMealsAdapter.ViewHolder> {
     private static final String TAG = "MyAdapter";
     Context context;
     List<Meal> meals;
 
-    public CountryAdapter(Context context , List<Meal> meals) {
+    public CountryMealsAdapter(Context context , List<Meal> meals) {
         this.context = context;
         this.meals = meals;
     }

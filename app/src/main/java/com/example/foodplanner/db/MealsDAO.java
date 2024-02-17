@@ -29,6 +29,9 @@ public interface MealsDAO {
     @Delete
     void deletePlanMeal (MealPlan mealPlan);
 
+    @Query("DELETE FROM meals_plan_table WHERE email = :email")
+    void deletePlan(String email);
+
     @Query("SELECT COUNT(*) FROM meals_table WHERE idMeal = :mealId")
      int checkIfMealExists(String mealId);
 

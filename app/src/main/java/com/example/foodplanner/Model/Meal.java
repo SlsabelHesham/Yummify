@@ -40,6 +40,7 @@ public class Meal implements Serializable {
     String strIngredient18;
     String strIngredient19;
     String strIngredient20;
+    String strIngredient;
     String strMeasure1;
     String strMeasure2;
     String strMeasure3;
@@ -339,6 +340,14 @@ public class Meal implements Serializable {
         this.strIngredient20 = strIngredient20;
     }
 
+    public String getStrIngredient() {
+        return strIngredient;
+    }
+
+    public void setStrIngredient(String strIngredient) {
+        this.strIngredient = strIngredient;
+    }
+
     public String getStrMeasure1() {
         return strMeasure1;
     }
@@ -506,4 +515,6 @@ public class Meal implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

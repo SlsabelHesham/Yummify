@@ -58,13 +58,37 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                         networkCallback.onSuccessResult(response.body().getCategories());
                     }
                     else if (query.equals("country")) {
-                        Log.i("TAG", "onResponse catggggggg: " + response.body().getMeals().size());
+                        Log.i("TAG", "onResponse catggggggg try: " + response.body().getMeals().size());
                         networkCallback.onSuccessResult(response.body().getMeals());
                     }
 
                 }
             }
 
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                Log.i(TAG, "onFailure: ");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void makeNetworkCallbackIngredients(NetworkCallback networkCallback) {
+        Call<MealResponse> call = mealService.getIngredients("list");
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i("TAG", "onResponse: ingredient ");
+
+                        Log.i("TAG", "onResponse ingredient: " + response.body().getMeals().size());
+                        networkCallback.onSuccessResult(response.body().getMeals());
+                    Log.i("TAG", "onResponse: after");
+
+                }
+            }
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
                 Log.i(TAG, "onFailure: ");
@@ -120,15 +144,43 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
     @Override
-    public void makeNetworkCallBackByMeal(NetworkCallback networkCallback, String mealName) {
-        Call<MealResponse> call = mealService.getMealDetails(mealName);
+    public void makeNetworkCallBackByIngredient(NetworkCallback networkCallback, String ingredientName) {
+        Call<MealResponse> call = mealService.getAllIngredientMeals(ingredientName);
 
         call.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, "onResponse: ");
+                    Log.i(TAG, "onResponse: ing");
                     networkCallback.onSuccessResult(response.body().getMeals());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                Log.i(TAG, "onFailure: ing");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void makeNetworkCallBackByMeal(NetworkCallback networkCallback, String mealName) {
+        Call<MealResponse> call = mealService.getMealDetails(mealName);
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: ");
+                    if(response.body().getMeals() == null)
+                    {
+                        networkCallback.onFailureResult("noData");
+                    }
+                    else{
+                        networkCallback.onSuccessResult(response.body().getMeals());
+                    }
 
                 }
             }
@@ -141,4 +193,27 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
             }
         });
     }
+/*
+    @Override
+    public void makeNetworkCallbackByName(NetworkCallback networkCallBack, String mealName) {
+        Call<MealResponse> call = mealService.getMealByName(mealName);
+        call.enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: ");
+                    networkCallBack.onSuccessResult(response.body().getMeals());
+
+                }
+            }
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                Log.i(TAG, "onFailure: ");
+                networkCallBack.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+
+    }
+    */
 }

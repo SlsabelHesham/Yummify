@@ -43,6 +43,11 @@ public class PlanPresenterImpl implements PlanPresenter {
     }
 
     @Override
+    public void removeWeekPlan(String email) {
+        repository.deletePlan(email);
+    }
+
+    @Override
     public void addMealToPlan(MealPlan mealPlan) {
         repository.addMealToPlan(mealPlan);
     }

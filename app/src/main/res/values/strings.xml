@@ -34,4 +34,8 @@
     <string name="or">OR</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="category">Category</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="country">Country</string>
+    <string name="ingredient">Ingredient</string>
 </resources>

@@ -14,6 +14,7 @@ public interface MealsLocalDataSource {
     void deleteMeal(Meal meal);
     void deletePlanMeal(MealPlan mealPlan);
 
+    void deletePlan(String email);
     LiveData<List<Meal>> getAllStoredMeals(String email);
     LiveData<List<MealPlan>> getPlan(String email , String day);
 

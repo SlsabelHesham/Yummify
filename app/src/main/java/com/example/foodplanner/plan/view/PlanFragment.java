@@ -1,5 +1,7 @@
 package com.example.foodplanner.plan.view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PlanFragment extends Fragment implements PlanView , OnPlanClickListener {
@@ -61,6 +64,19 @@ public class PlanFragment extends Fragment implements PlanView , OnPlanClickList
         planPresenter = new PlanPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));
 
+        Calendar calendar = Calendar.getInstance();
+        int currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int lastSavedWeek = sharedPreferences.getInt("lastSavedWeek", -1);
+
+        Log.i("sh", "onViewCreated: "+lastSavedWeek);
+        if (currentWeek != lastSavedWeek) {
+            removeWeekPlan(email);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("lastSavedWeek", currentWeek);
+            editor.apply();
+        }
         if(itemList.isEmpty()){
             ParentItemList();
         }
@@ -82,7 +98,7 @@ public class PlanFragment extends Fragment implements PlanView , OnPlanClickList
 
         plan = planPresenter.getWeekPlan(email , "Tuesday");
         if(plan != null){
-            showThursdayData(plan);
+            showTuesdayData(plan);
         }
 
         plan = planPresenter.getWeekPlan(email , "Wednesday");
@@ -101,8 +117,7 @@ public class PlanFragment extends Fragment implements PlanView , OnPlanClickList
         }
     }
 
-    private void ParentItemList()
-    {
+    private void ParentItemList() {
         saturday = new WeekItem("Saturday", new ArrayList<>());
         itemList.add(saturday);
         sunday = new WeekItem("Sunday", new ArrayList<>());
@@ -205,12 +220,16 @@ public class PlanFragment extends Fragment implements PlanView , OnPlanClickList
             }
         });
     }
-
-
     @Override
     public void removeMeal(MealPlan mealPlan) {
         planPresenter.removeFromPlan(mealPlan);
     }
+
+    @Override
+    public void removeWeekPlan(String email) {
+        planPresenter.removeWeekPlan(email);
+    }
+
     @Override
     public void addToPlan(MealPlan mealPlan) {
 

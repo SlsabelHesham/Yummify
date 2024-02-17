@@ -35,7 +35,7 @@ public class CountryFragment extends Fragment implements CountryView{
 
     RecyclerView countryRecyclerView;
     LinearLayoutManager layoutManager;
-    CountryAdapter countryAdapter;
+    CountryMealsAdapter countryAdapter;
 
     CountryPresenter countryPresenter;
     ChipGroup countriesChipGroup;
@@ -65,7 +65,7 @@ public class CountryFragment extends Fragment implements CountryView{
         countryAnimation = view.findViewById(R.id.countryAnimation);
         layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        countryAdapter = new CountryAdapter(view.getContext() , new ArrayList<>());
+        countryAdapter = new CountryMealsAdapter(view.getContext() , new ArrayList<>());
 
         countryPresenter = new CountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));

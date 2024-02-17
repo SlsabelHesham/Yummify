@@ -44,11 +44,19 @@ public class MealsRepositoryImpl implements MealRepository {
         mealsRemoteDataSource.makeNetworkCallack(networkCallBack , "category");
     }
     @Override
+    public void getAllIngredients(NetworkCallback networkCallBack) {
+        mealsRemoteDataSource.makeNetworkCallbackIngredients(networkCallBack);
+    }
+    @Override
     public void getAllCountries(NetworkCallback networkCallBack) {
         mealsRemoteDataSource.makeNetworkCallack(networkCallBack , "country");
     }
-
-
+    /*
+    @Override
+    public void getMealsByName(NetworkCallback networkCallBack , String mealName) {
+        mealsRemoteDataSource.makeNetworkCallackByName(networkCallBack);
+    }
+*/
     @Override
     public void getAllMeals(NetworkCallback networkCallBack , String categoryName) {
         mealsRemoteDataSource.makeNetworkCallBackByCategory(networkCallBack , categoryName);
@@ -56,6 +64,10 @@ public class MealsRepositoryImpl implements MealRepository {
     @Override
     public void getAllCountryMeals(NetworkCallback networkCallBack , String countryMeal) {
         mealsRemoteDataSource.makeNetworkCallBackByCountry(networkCallBack , countryMeal);
+    }
+    @Override
+    public void getAllIngredientMeals(NetworkCallback networkCallBack , String ingredientMeal) {
+        mealsRemoteDataSource.makeNetworkCallBackByIngredient(networkCallBack , ingredientMeal);
     }
     @Override
     public void getMeal(NetworkCallback networkCallBack , String mealName) {
@@ -77,6 +89,11 @@ public class MealsRepositoryImpl implements MealRepository {
     @Override
     public void addMealToPlan(MealPlan mealPlan) {
         mealsLocalDataSource.addMealToPlan(mealPlan);
+    }
+
+    @Override
+    public void deletePlan(String email) {
+        mealsLocalDataSource.deletePlan(email);
     }
 
     @Override
