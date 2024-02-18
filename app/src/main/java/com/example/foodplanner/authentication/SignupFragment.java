@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -54,6 +55,7 @@ public class SignupFragment extends Fragment {
     private AtomicBoolean result;
     private SignInButton googleBtn;
     private GoogleSignInClient googleSignInClient;
+    DrawerLayout drawerLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,8 @@ public class SignupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        drawerLayout = requireActivity().findViewById(R.id.drawerLayout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         username = view.findViewById(R.id.usernameET);
         email = view.findViewById(R.id.emailET);
         password = view.findViewById(R.id.passwordET);

@@ -1,15 +1,20 @@
 package com.example.foodplanner.authentication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.DragAndDropPermissions;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +48,7 @@ public class LoginFragment extends Fragment {
     TextView switchToSignup;
     private SignInButton googleBtn;
     private GoogleSignInClient googleSignInClient;
+    DrawerLayout drawerLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         email = view.findViewById(R.id.emailET);
         password = view.findViewById(R.id.passwordET);
+        drawerLayout = requireActivity().findViewById(R.id.drawerLayout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         loginBtn = view.findViewById(R.id.loginBtn);
         switchToSignup = view.findViewById(R.id.switchToSignup);
         googleBtn = view.findViewById(R.id.googleBtn);
@@ -104,6 +112,10 @@ public class LoginFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    SharedPreferences preferences = getContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putBoolean("isLoggedIn", true);
+                                    editor.apply();
                                     navController.navigate(R.id.action_loginFragment_to_homeFragment);
                                 } else {
                                     EditText password =  getView().findViewById(R.id.passwordET);

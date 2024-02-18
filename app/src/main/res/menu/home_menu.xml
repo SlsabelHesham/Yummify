@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/account_information" />
+    <item
+        android:id="@+id/accountFragment"
+        android:title="@string/account_information" />
     <item
         android:id="@+id/favouritesFragment"
         android:icon="@drawable/home_cards"
@@ -10,5 +12,8 @@
     <item
         android:id="@+id/planFragment"
         android:title="@string/weekly_plan" />
-    <item android:title="@string/logout" />
+    <item
+        android:id="@+id/welcomeFragment"
+        android:title="@string/logout"
+        />
 </menu>

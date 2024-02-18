@@ -40,7 +40,7 @@
                 android:layout_width="46dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="parent"
@@ -55,13 +55,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/search_icon" />
-
-            <!-- Right most TextView -->
-
-            <!-- Right most ImageView -->
-            <!-- استخدام الصورة المناسبة -->
-
-            <!-- ImageView beside title of ToolBar -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -160,13 +153,24 @@
         android:fontFamily="@font/bree_serif"
         android:text="Inspiration"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/my_recycler_view"
         app:layout_constraintStart_toStartOf="@+id/my_recycler_view"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.092" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/noInternetAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="nointernet.json"
+        app:lottie_loop="true" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="405dp"

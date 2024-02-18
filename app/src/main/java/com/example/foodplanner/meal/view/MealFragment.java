@@ -3,11 +3,19 @@ package com.example.foodplanner.meal.view;
 import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +72,7 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
             mealIng19 , mealMes19,
             mealIng20 , mealMes20,
             mealInstructionTV , mealInstruction;
+    NavController navController;
 
     ImageView mealFavImage ,mealVideoImage , mealImage, ing1Img,ing2Img,ing3Img,ing4Img,ing5Img,ing6Img,ing7Img,ing8Img,ing9Img,ing10Img,
     ing11Img,ing12Img,ing13Img,ing14Img,ing15Img,ing16Img,ing17Img,ing18Img,ing19Img,ing20Img;
@@ -198,6 +207,7 @@ checkMeal(checkMealObservable);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user != null ? user.getEmail() : null;
         mealPresenter.getMealDetails(receivedObject.getStrMeal());
+        navController = Navigation.findNavController((Activity) view.getContext() , R.id.fragmentNavHost);
         /*
 
         if(receivedObject.getStrCategory() != null){
@@ -219,19 +229,38 @@ checkMeal(checkMealObservable);
         mealFavImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!inFavourites){
-                    inFavourites = true;
-                    mealFavImage.setImageResource(R.drawable.favourite);
-                    receivedObject.setEmail(email);
-                    onMealClickListener.onFavMealClick(receivedObject);
-                    Log.i("TEST", "onClick: doneeeeeeeeeee");
-                    Toast.makeText(MealFragment.this.getContext() , "Meal Added To Favourites" , Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    inFavourites = false;
-                    mealFavImage.setImageResource(R.drawable.not_favourite);
-                    onMealClickListener.onFavMealUnClick(receivedObject);
-                    Toast.makeText(view.getContext() , "Meal Removed From Favourites" , Toast.LENGTH_SHORT).show();
+                SharedPreferences preferences = getContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
+                boolean guest = preferences.getBoolean("guest", false);
+                if (guest) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Add Your favourites, plan your meals and more!");
+                    builder.setTitle("Sign Up for More Features");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Sign Up", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putBoolean("guest", false);
+                        editor.apply();
+                        navController.navigate(R.id.action_mealFragment_to_signupFragment);
+                    });
+                    builder.setNegativeButton("Cansel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    if (!inFavourites) {
+                        inFavourites = true;
+                        mealFavImage.setImageResource(R.drawable.favourite);
+                        receivedObject.setEmail(email);
+                        onMealClickListener.onFavMealClick(receivedObject);
+                        Log.i("TEST", "onClick: doneeeeeeeeeee");
+                        Toast.makeText(MealFragment.this.getContext(), "Meal Added To Favourites", Toast.LENGTH_SHORT).show();
+                    } else {
+                        inFavourites = false;
+                        mealFavImage.setImageResource(R.drawable.not_favourite);
+                        onMealClickListener.onFavMealUnClick(receivedObject);
+                        Toast.makeText(view.getContext(), "Meal Removed From Favourites", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
