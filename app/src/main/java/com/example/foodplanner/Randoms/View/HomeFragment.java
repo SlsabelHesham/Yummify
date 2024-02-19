@@ -2,6 +2,7 @@ package com.example.foodplanner.Randoms.View;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -118,8 +120,28 @@ public class HomeFragment extends Fragment implements RandomView, OnRandomClickL
         planMeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragmentNavHost);
-                navController.navigate(R.id.action_homeFragment_to_planFragment);
+                SharedPreferences preferences = getContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
+                boolean guest = preferences.getBoolean("guest", false);
+
+                if (guest) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("Add Your favourites, plan your meals and more!");
+                    builder.setTitle("Sign Up for More Features");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Sign Up", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putBoolean("guest", false);
+                        editor.apply();
+                        NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragmentNavHost);
+                        navController.navigate(R.id.signupFragment);
+                    });
+                    builder.setNegativeButton("Cansel", (DialogInterface.OnClickListener) (dialog, which) -> dialog.cancel());
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    NavController navController = Navigation.findNavController((Activity) view.getContext(), R.id.fragmentNavHost);
+                    navController.navigate(R.id.action_homeFragment_to_planFragment);
+                }
             }
         });
         categories.setOnClickListener(view13 -> {

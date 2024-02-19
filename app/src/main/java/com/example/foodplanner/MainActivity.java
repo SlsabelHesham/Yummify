@@ -5,8 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Path;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -115,12 +119,19 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.show();
                 }
                 else {
-                    FirebaseAuth.getInstance().signOut();
-                    SharedPreferences preferences2 = this.getSharedPreferences("pref", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences2.edit();
-                    editor.putBoolean("isLoggedIn", false);
-                    editor.apply();
-                    navController.navigate(R.id.welcomeFragment);
+                    ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        FirebaseAuth.getInstance().signOut();
+                        SharedPreferences preferences2 = this.getSharedPreferences("pref", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences2.edit();
+                        editor.putBoolean("isLoggedIn", false);
+                        editor.apply();
+                        navController.navigate(R.id.welcomeFragment);
+                    }
+                    else{
+                        Toast.makeText(this, "Please Connect to the Internet!", Toast.LENGTH_SHORT).show();                }
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START);

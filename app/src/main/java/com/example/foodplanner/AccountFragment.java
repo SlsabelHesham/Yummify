@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -107,6 +109,10 @@ public class AccountFragment extends Fragment implements FavMealsView, MealsView
             @SuppressLint("CheckResult")
             @Override
             public void onClick(View view) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+                if (networkInfo != null && networkInfo.isConnected()) {
                 CollectionReference dbMeals = db.collection("Meals");
                 Flowable<List<Meal>> mealsList;
 
@@ -162,51 +168,60 @@ public class AccountFragment extends Fragment implements FavMealsView, MealsView
                                 });
                     }
                 });
+                } else {
+                    Toast.makeText(getContext(), "Please Connect to the Internet!", Toast.LENGTH_SHORT).show();                }
+
             }
         });
 
         restore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CollectionReference dbMeals = db.collection("Meals");
-                CollectionReference dbMealsPlan = db.collection("MealsPlan");
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String email = user != null ? user.getEmail() : null;
-                dbMeals.whereEqualTo("email", email)
-                .get()
-                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                            List<Meal> mealsList = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                Meal meal = document.toObject(Meal.class);
-                                mealsList.add(meal);
-                            }
-                            for(Meal meal: mealsList){
-                                mealPresenter.addToFav(meal);
-                            }
-                            Toast.makeText(getContext(), "Mealsssss loaded from Firestore", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(getContext(), "Failed to load meals from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    CollectionReference dbMeals = db.collection("Meals");
+                    CollectionReference dbMealsPlan = db.collection("MealsPlan");
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String email = user != null ? user.getEmail() : null;
+                    dbMeals.whereEqualTo("email", email)
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                List<Meal> mealsList = new ArrayList<>();
+                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                    Meal meal = document.toObject(Meal.class);
+                                    mealsList.add(meal);
+                                }
+                                for (Meal meal : mealsList) {
+                                    mealPresenter.addToFav(meal);
+                                }
+                                Toast.makeText(getContext(), "Your favourite Meals are restored", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(getContext(), "Failed to load meals from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
 
-
-                dbMealsPlan.whereEqualTo("email", email)
-                        .get()
-                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                            List<MealPlan> mealsPlanList = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                MealPlan meal = document.toObject(MealPlan.class);
-                                mealsPlanList.add(meal);
-                            }
-                            for(MealPlan mealPlan: mealsPlanList){
-                                planPresenter.addMealToPlan(mealPlan);
-                            }
-                            Toast.makeText(getContext(), "Meals loaded from Firestore", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(getContext(), "Failed to load meals from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                    dbMealsPlan.whereEqualTo("email", email)
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                List<MealPlan> mealsPlanList = new ArrayList<>();
+                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                    MealPlan meal = document.toObject(MealPlan.class);
+                                    mealsPlanList.add(meal);
+                                }
+                                for (MealPlan mealPlan : mealsPlanList) {
+                                    planPresenter.addMealToPlan(mealPlan);
+                                }
+                                Toast.makeText(getContext(), "Your plan are restored", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(getContext(), "Failed to load meals from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                }
+                else {
+                    Toast.makeText(getContext(), "Please Connect to the Internet!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -32,7 +32,7 @@ public class MealsRepositoryImpl implements MealRepository {
     @Override
     public Observable getAllRandoms() {
         List<Observable<List<Meal>>> observables = new ArrayList<>();
-        for(int i= 0; i<20;i++){
+        for(int i= 0; i<10;i++){
             observables.add(mealsRemoteDataSource.makeNetworkCallback());
         }
         return Observable.concat(observables);

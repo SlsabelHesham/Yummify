@@ -10,12 +10,12 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/noInternetAnimation"
         android:layout_width="409dp"
-        android:layout_height="276dp"
+        android:layout_height="310dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="account.json"
+        app:lottie_fileName="acccount.json"
         app:lottie_loop="true" />
     <View
         android:id="@+id/profileView"
@@ -76,7 +76,9 @@
         android:layout_marginStart="85dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="85dp"
+        android:backgroundTint="@color/background"
         android:text="Restore"
+        android:textColor="@color/main_green"
         app:layout_constraintEnd_toEndOf="@+id/profileView"
         app:layout_constraintStart_toStartOf="@+id/profileView"
         app:layout_constraintTop_toBottomOf="@+id/store" />

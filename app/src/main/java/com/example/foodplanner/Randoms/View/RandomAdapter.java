@@ -1,5 +1,7 @@
 package com.example.foodplanner.Randoms.View;
 
+import static android.view.View.VISIBLE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -62,6 +64,7 @@ public class RandomAdapter extends RecyclerView.Adapter<RandomAdapter.ViewHolder
         }
         holder.mealArea.setText(meal.getStrArea());
         holder.mealCategory.setText(meal.getStrCategory());
+        holder.ingredientsNum.setText(ingredientsNumber(meal)+"");
         Glide.with(context).load(meal.getStrMealThumb()).into(holder.mealImage);
         holder.randomMealLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +89,29 @@ public class RandomAdapter extends RecyclerView.Adapter<RandomAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public int ingredientsNumber(Meal receivedObject){
+        int count = 0;
+        String[] ingredientsArray = new String[]{receivedObject.getStrIngredient1(), receivedObject.getStrIngredient2(), receivedObject.getStrIngredient3(),
+                receivedObject.getStrIngredient4(), receivedObject.getStrIngredient5(), receivedObject.getStrIngredient6(),
+                receivedObject.getStrIngredient7(), receivedObject.getStrIngredient8(), receivedObject.getStrIngredient9(),
+                receivedObject.getStrIngredient10(), receivedObject.getStrIngredient11(), receivedObject.getStrIngredient12(),
+                receivedObject.getStrIngredient13(), receivedObject.getStrIngredient14(), receivedObject.getStrIngredient15(),
+                receivedObject.getStrIngredient16(), receivedObject.getStrIngredient17(), receivedObject.getStrIngredient18(),
+                receivedObject.getStrIngredient19(), receivedObject.getStrIngredient20()};
+
+        for (int i = 0; i< ingredientsArray.length ;i++) {
+            if (ingredientsArray[i] != null && !ingredientsArray[i].equals("")) {
+               count++;
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mealName;
         public TextView mealCategory;
-        public TextView mealArea;
+        public TextView mealArea , ingredientsNum;
         public ImageView mealImage;
         public ConstraintLayout randomMealLayout;
         public View layout;
@@ -101,6 +123,7 @@ public class RandomAdapter extends RecyclerView.Adapter<RandomAdapter.ViewHolder
             mealArea = v.findViewById(R.id.tvMealArea);
             mealImage = v.findViewById(R.id.mealImage);
             randomMealLayout = v.findViewById(R.id.rowLayout);
+            ingredientsNum = v.findViewById(R.id.ingredientsNum);
         }
     }
 }
