@@ -54,7 +54,7 @@
                     android:fontFamily="@font/bree_serif"
                     android:gravity="center"
                     android:text="Title:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/main_green"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 

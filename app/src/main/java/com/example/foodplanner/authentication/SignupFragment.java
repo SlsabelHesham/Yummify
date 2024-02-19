@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.authentication;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -22,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodplanner.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,10 +38,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.sql.Struct;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 public class SignupFragment extends Fragment {
+
 
     private EditText username,email,password,confirmPassword;
     private TextInputLayout usernameLayout,emailLayout,passwordLayout, confirmPasswordLayout;
@@ -53,7 +55,7 @@ public class SignupFragment extends Fragment {
     private AtomicBoolean result;
     private SignInButton googleBtn;
     private GoogleSignInClient googleSignInClient;
-
+    DrawerLayout drawerLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,8 @@ public class SignupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        drawerLayout = requireActivity().findViewById(R.id.drawerLayout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         username = view.findViewById(R.id.usernameET);
         email = view.findViewById(R.id.emailET);
         password = view.findViewById(R.id.passwordET);
@@ -119,7 +122,7 @@ public class SignupFragment extends Fragment {
                 }
                 else if(!password.getText().toString().equals(confirmPassword.getText().toString())) {
                     confirmPassword.requestFocus();
-                        confirmPassword.setError("Passwords didn't match");
+                    confirmPassword.setError("Passwords didn't match");
                 }
                 else {
                     checkUserExist(email.getText().toString());
@@ -157,10 +160,10 @@ public class SignupFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
                     public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                        if (task.getResult().getSignInMethods().size() == 0) {
+                        if (task.getResult().getSignInMethods().size() != 0) {
                             email.requestFocus();
                             email.setError("Email already exist, Try to login");
-                            }
+                        }
                         else {
                             SignUpUser(email.getText().toString(), password.getText().toString(), username.getText().toString());
                         }

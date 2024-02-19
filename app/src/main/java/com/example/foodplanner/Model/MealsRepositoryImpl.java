@@ -1,11 +1,15 @@
 package com.example.foodplanner.Model;
 
-import androidx.lifecycle.LiveData;
-
-import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.Network.MealsRemoteDataSource;
 import com.example.foodplanner.db.MealsLocalDataSource;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealsRepositoryImpl implements MealRepository {
     private static MealsRepositoryImpl repository = null;
@@ -23,52 +27,89 @@ public class MealsRepositoryImpl implements MealRepository {
         }
         return repository;
     }
-    @Override
-    public LiveData<List<Meal>> getStoredMeals() {
-        return mealsLocalDataSource.getAllStoredMeals();
-    }
 
+    ////////////RX/////////////////////
     @Override
-    public void getAllRandoms(NetworkCallback networkCallBack) {
-        for(int i= 0; i<20;i++){
-            mealsRemoteDataSource.makeNetworkCallack(networkCallBack , "random");
+    public Observable getAllRandoms() {
+        List<Observable<List<Meal>>> observables = new ArrayList<>();
+        for(int i= 0; i<10;i++){
+            observables.add(mealsRemoteDataSource.makeNetworkCallback());
         }
+        return Observable.concat(observables);
     }
 
     @Override
-    public void getAllCategories(NetworkCallback networkCallBack) {
-        mealsRemoteDataSource.makeNetworkCallack(networkCallBack , "category");
+    public Observable getAllCategories() {
+        return mealsRemoteDataSource.makeNetworkCallbackForCategory();
     }
     @Override
-    public void getAllCountries(NetworkCallback networkCallBack) {
-        mealsRemoteDataSource.makeNetworkCallack(networkCallBack , "country");
+    public Observable getAllCountries() {
+        return  mealsRemoteDataSource.makeNetworkCallbackForCountry();
     }
+    @Override
+    public Observable getMeal(String mealName) {
+        return mealsRemoteDataSource.makeNetworkCallbackForMealName(mealName);
+    }
+    @Override
+    public Observable getAllMeals(String categoryName) {
+        return mealsRemoteDataSource.makeNetworkCallbackByCategoryName(categoryName);
+    }
+    @Override
+    public Observable getAllCountryMeals(String countryMeal) {
+        return mealsRemoteDataSource.makeNetworkCallbackByCountryName(countryMeal);
+    }
+    @Override
+    public Observable getAllIngredients() {
+        return mealsRemoteDataSource.makeNetworkCallbackIngredients();
+    }
+    @Override
+    public Observable getAllIngredientMeals(String ingredientMeal) {
+        return mealsRemoteDataSource.makeNetworkCallBackByIngredient(ingredientMeal);
+    }
+    ////////////RX/////////////////////
 
 
+
+
+
     @Override
-    public void getAllMeals(NetworkCallback networkCallBack , String categoryName) {
-        mealsRemoteDataSource.makeNetworkCallBackByCategory(networkCallBack , categoryName);
+    public Flowable<List<Meal>> getStoredMeals(String email) {
+        return mealsLocalDataSource.getAllStoredMeals(email);
     }
     @Override
-    public void getAllCountryMeals(NetworkCallback networkCallBack , String countryMeal) {
-        mealsRemoteDataSource.makeNetworkCallBackByCountry(networkCallBack , countryMeal);
+    public Completable insertMeal(Meal meal) {
+        return mealsLocalDataSource.insertMeal(meal);
     }
     @Override
-    public void getMeal(NetworkCallback networkCallBack , String mealName) {
-        mealsRemoteDataSource.makeNetworkCallBackByMeal(networkCallBack , mealName);
+    public Completable deleteMeal(Meal meal) {
+        return mealsLocalDataSource.deleteMeal(meal);
     }
     @Override
-    public void insertMeal(Meal meal) {
-        mealsLocalDataSource.insertMeal(meal);
-    }
-    @Override
-    public void deleteMeal(Meal meal) {
-        mealsLocalDataSource.deleteMeal(meal);
+    public Single<Boolean> checkMealExist(String mealId) {
+        return mealsLocalDataSource.checkMealExist(mealId)
+                .map(count -> count > 0);
     }
 
     @Override
-    public boolean checkMealExist(String mealId) {
-        boolean result = mealsLocalDataSource.checkMealExist(mealId);
-        return result;
+    public Flowable<List<MealPlan>> getPlan(String email, String day) {
+        return mealsLocalDataSource.getPlan(email , day);
+    }
+
+    @Override
+    public Flowable<List<MealPlan>> getAllWeekPlan(String email) {
+        return mealsLocalDataSource.getPlan(email);
+    }
+    @Override
+    public Completable deletePlanMeal(MealPlan mealPlan) {
+        return mealsLocalDataSource.deletePlanMeal(mealPlan);
+    }
+    @Override
+    public Completable addMealToPlan(MealPlan mealPlan) {
+        return mealsLocalDataSource.addMealToPlan(mealPlan);
+    }
+
+    @Override
+    public Completable deletePlan(String email) {
+        return mealsLocalDataSource.deletePlan(email);
     }
 }

@@ -1,27 +1,43 @@
 package com.example.foodplanner.Model;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.foodplanner.Network.NetworkCallback;
-
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+
 public interface MealRepository {
-    public LiveData<List<Meal>> getStoredMeals();
+    Observable getAllRandoms();
+    Observable getAllCategories();
+    Observable getAllCountries();
+    Observable getMeal(String mealName);
+    Observable getAllMeals(String categoryName);
 
-    public void getAllRandoms(NetworkCallback networkCallBack);
+    Observable getAllCountryMeals(String countryMeal);
+    Observable getAllIngredients();
+
+    Observable getAllIngredientMeals(String ingredientMeal);
 
 
-    public void getAllCategories(NetworkCallback networkCallBack);
 
-    public void getAllCountries(NetworkCallback networkCallBack);
-    public void getAllMeals(NetworkCallback networkCallBack , String categoryName);
-    public void getAllCountryMeals(NetworkCallback networkCallBack , String countryMeal);
-    public void getMeal(NetworkCallback networkCallBack , String mealName);
-    public void insertMeal(Meal meal);
 
-    public void deleteMeal(Meal meal);
+    ////// Roooooooom
+    Flowable<List<Meal>> getStoredMeals(String email);
+    Completable insertMeal(Meal meal);
+    Completable deleteMeal(Meal meal);
+    Single<Boolean> checkMealExist(String mealId);
 
-    public boolean checkMealExist(String mealId);
 
+
+
+
+    Flowable<List<MealPlan>> getPlan(String email , String day);
+
+    Flowable<List<MealPlan>> getAllWeekPlan(String email);
+
+    Completable deletePlanMeal(MealPlan mealPlan);
+    Completable addMealToPlan(MealPlan mealPlan);
+    Completable deletePlan(String email);
 }

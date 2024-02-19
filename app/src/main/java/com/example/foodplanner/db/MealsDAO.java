@@ -9,19 +9,39 @@ import androidx.room.Query;
 
 
 import com.example.foodplanner.Model.Meal;
+import com.example.foodplanner.Model.MealPlan;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 
 @Dao
 public interface MealsDAO {
-    @Query("SELECT * FROM meals_table")
-    LiveData<List<Meal>> getAllMeals();
+    @Query("SELECT * FROM meals_table WHERE email = :email")
+    Flowable<List<Meal>> getAllMeals(String email);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertMeal (Meal meal);
+    Completable insertMeal (Meal meal);
     @Delete
-    void deleteMeal (Meal meal);
-
+    Completable deleteMeal (Meal meal);
     @Query("SELECT COUNT(*) FROM meals_table WHERE idMeal = :mealId")
-     int checkIfMealExists(String mealId);
+    Single<Integer> checkIfMealExists(String mealId);
+
+
+
+
+
+
+    @Query("SELECT * FROM meals_plan_table WHERE email = :email and day = :day")
+    Flowable<List<MealPlan>> getPlan(String email , String day);
+    @Query("SELECT * FROM meals_plan_table WHERE email = :email")
+    Flowable<List<MealPlan>> getPlan(String email);
+    @Delete
+    Completable deletePlanMeal (MealPlan mealPlan);
+    @Query("DELETE FROM meals_plan_table WHERE email = :email")
+    Completable deletePlan(String email);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insertMealPlan (MealPlan mealPlan);
 }

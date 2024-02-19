@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_green"
+    android:background="@color/background"
     tools:context=".FavouriteMeals.View.FavouritesFragment">
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/bree_serif"
         android:text="@string/my_favourites"
-        android:textColor="@color/white"
+        android:textColor="@color/main_green"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -64,7 +64,7 @@
         android:fontFamily="@font/bree_serif"
         android:gravity="center"
         android:text="@string/no_favourites_yet"
-        android:textColor="?android:attr/textColorHintInverse"
+        android:textColor="?android:attr/textColorHint"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

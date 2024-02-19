@@ -30,10 +30,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private static final String TAG = "MyAdapter";
     Context context;
     List<Category> categories;
+    String fragment;
 
-    public CategoryAdapter(Context context , List<Category> categories) {
+    public CategoryAdapter(Context context , List<Category> categories , String fragment) {
         this.context = context;
         this.categories = categories;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -61,8 +63,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 NavController navController = Navigation.findNavController((Activity) context, R.id.fragmentNavHost);
                 Bundle bundle = new Bundle();
                 bundle.putString("categoryName", category.getStrCategory());
-                navController.navigate(R.id.action_categoryFragment_to_allMealsFragment, bundle);
-
+                if(fragment.equals("search")){
+                    navController.navigate(R.id.action_searchFragment_to_allMealsFragment, bundle);
+                }
+                else{
+                    navController.navigate(R.id.action_categoryFragment_to_allMealsFragment, bundle);
+                }
             }
         });
            Log.i(TAG, "***** onBindViewHolder *****");
@@ -74,7 +80,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public void updateData(List<Category> categories) {
-        this.categories.addAll(categories);
+        this.categories = categories;
         notifyDataSetChanged();
     }
 

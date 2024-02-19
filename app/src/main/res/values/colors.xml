@@ -7,9 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="main_green">#394B38</color>
-    <color name="card_green">#293628</color>
-    <color name="beige">#D1CCB7</color>
+    <color name="main_green">#3A3A3A</color>
+    <color name="background">#E3E3E3</color>
+    <color name="card_green">#FFFFFFFF</color>
+    <color name="card_greenn">#293628</color>
+    <color name="beige">#FFFFFFFF</color>
     <color name="video_red">#54402F</color>
     <color name="guest_red">#AF4541</color>
 <<<<<<< HEAD

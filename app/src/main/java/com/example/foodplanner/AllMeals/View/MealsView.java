@@ -7,5 +7,4 @@ import java.util.List;
 public interface MealsView {
     public void showData(List<Meal> products);
     public void showErrorMsg(String error);
-    public void addProduct(Meal product);
 }

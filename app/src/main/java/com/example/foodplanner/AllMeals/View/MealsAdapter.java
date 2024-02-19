@@ -29,12 +29,19 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     private static final String TAG = "MyAdapter";
     Context context;
     List<Meal> meals;
+    String fragment = null;
 
     OnMealClickListener listener;
-    public MealsAdapter(Context context , List<Meal> meals , OnMealClickListener listener) {
+    public MealsAdapter(Context context , List<Meal> meals , OnMealClickListener listener , String fragment) {
         this.context = context;
         this.meals = meals;
         this.listener = listener;
+        this.fragment = fragment;
+    }
+    public MealsAdapter(Context context , List<Meal> meals , String fragment) {
+        this.context = context;
+        this.meals = meals;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -67,11 +74,19 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
                 NavController navController = Navigation.findNavController((Activity) context, R.id.fragmentNavHost);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("meal", (Serializable) meal);
-                navController.navigate(R.id.action_allMealsFragment_to_mealFragment, bundle);
-
+                if(fragment.equals("search")){
+                    navController.navigate(R.id.action_allCountryMealsFragment_to_mealFragment, bundle);
+                } else if (fragment.equals("mealSearch")) {
+                    navController.navigate(R.id.action_searchFragment_to_mealFragment, bundle);
+                } else if (fragment.equals("ingredient")) {
+                    navController.navigate(R.id.action_allIngredientMealsFragment_to_mealFragment, bundle);
+                } else{
+                    Log.i("TAGG", "onClick: ");
+                    navController.navigate(R.id.action_allMealsFragment_to_mealFragment, bundle);
+                }
             }
         });
-           Log.i(TAG, "***** onBindViewHolder *****");
+        Log.i(TAG, "***** onBindViewHolder *****");
     }
 
     @Override
@@ -80,7 +95,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     }
 
     public void updateData(List<Meal> meals) {
-        this.meals.addAll(meals);
+        this.meals = meals;
         notifyDataSetChanged();
     }
 

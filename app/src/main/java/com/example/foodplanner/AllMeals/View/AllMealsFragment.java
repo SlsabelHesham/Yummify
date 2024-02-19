@@ -57,7 +57,7 @@ public class AllMealsFragment extends Fragment implements MealsView, OnMealClick
         categoryNameTV.setText(categoryName);
         layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        allMealsAdapter = new MealsAdapter(view.getContext() , new ArrayList<>() , this);
+        allMealsAdapter = new MealsAdapter(view.getContext() , new ArrayList<>() , this,"");
 
         allMealsPresenter = new AllMealsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));
@@ -77,10 +77,6 @@ public class AllMealsFragment extends Fragment implements MealsView, OnMealClick
         Toast.makeText(this.getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void addProduct(Meal product) {
-
-    }
 
     @Override
     public void onFavProductClick(Meal product) {

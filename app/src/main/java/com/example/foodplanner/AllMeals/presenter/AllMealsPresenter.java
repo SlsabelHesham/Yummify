@@ -7,5 +7,7 @@ public interface AllMealsPresenter {
     public void getAllMeals(String categoryName);
 
     public void getAllCountryMeals(String countryName);
+
+    public void getAllIngredientMeals(String ingredientName);
     public void addToFav(Meal meal);
 }

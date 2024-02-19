@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @Entity(tableName = "meals_table")
 public class Meal implements Serializable {
+    String email;
     @PrimaryKey
     @NonNull
     String idMeal;
@@ -39,6 +40,7 @@ public class Meal implements Serializable {
     String strIngredient18;
     String strIngredient19;
     String strIngredient20;
+    String strIngredient;
     String strMeasure1;
     String strMeasure2;
     String strMeasure3;
@@ -111,6 +113,9 @@ public class Meal implements Serializable {
         this.strMeasure18 = strMeasure18;
         this.strMeasure19 = strMeasure19;
         this.strMeasure20 = strMeasure20;
+    }
+
+    public Meal() {
     }
 
     @NonNull
@@ -338,6 +343,14 @@ public class Meal implements Serializable {
         this.strIngredient20 = strIngredient20;
     }
 
+    public String getStrIngredient() {
+        return strIngredient;
+    }
+
+    public void setStrIngredient(String strIngredient) {
+        this.strIngredient = strIngredient;
+    }
+
     public String getStrMeasure1() {
         return strMeasure1;
     }
@@ -497,4 +510,14 @@ public class Meal implements Serializable {
     public void setStrMeasure20(String strMeasure20) {
         this.strMeasure20 = strMeasure20;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
 }

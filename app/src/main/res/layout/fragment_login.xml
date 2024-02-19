@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_green"
-    tools:context=".LoginFragment">
+    tools:context=".authentication.LoginFragment">
 
     <TextView
         android:id="@+id/textView6"
@@ -191,7 +191,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view3">
 
         <TextView
-            android:id="@+id/textView90"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -205,7 +205,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView900"
+            android:id="@+id/switchToSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -219,6 +219,16 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleBtn"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_centerInParent="true"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/view3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

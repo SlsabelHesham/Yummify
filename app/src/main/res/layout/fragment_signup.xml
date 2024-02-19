@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_green"
-    tools:context=".LoginFragment">
+    tools:context=".authentication.LoginFragment">
 
     <TextView
         android:id="@+id/textView6"
@@ -241,7 +241,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view3">
 
         <TextView
-            android:id="@+id/textView90"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

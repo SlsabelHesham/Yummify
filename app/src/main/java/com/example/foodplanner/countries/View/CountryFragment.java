@@ -35,7 +35,7 @@ public class CountryFragment extends Fragment implements CountryView{
 
     RecyclerView countryRecyclerView;
     LinearLayoutManager layoutManager;
-    CountryAdapter countryAdapter;
+    CountryMealsAdapter countryAdapter;
 
     CountryPresenter countryPresenter;
     ChipGroup countriesChipGroup;
@@ -65,7 +65,7 @@ public class CountryFragment extends Fragment implements CountryView{
         countryAnimation = view.findViewById(R.id.countryAnimation);
         layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        countryAdapter = new CountryAdapter(view.getContext() , new ArrayList<>());
+        countryAdapter = new CountryMealsAdapter(view.getContext() , new ArrayList<>());
 
         countryPresenter = new CountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                 MealsLocalDataSourceImpl.getInstance(view.getContext())));
@@ -83,9 +83,11 @@ public class CountryFragment extends Fragment implements CountryView{
                 if(chip != null){
                     String chipText = chip.getText().toString();
                     Log.i("test", "onCheckedChanged: "+ chipText);
+                    /*
                     allMealsPresenter = new AllMealsPresenterImpl(CountryFragment.this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                             MealsLocalDataSourceImpl.getInstance(view.getContext())));
-                    allMealsPresenter.getAllCountryMeals(chipText);
+                    */
+                    countryPresenter.getAllCountryMeals(chipText);
                 }
             }
         });
@@ -99,12 +101,14 @@ public class CountryFragment extends Fragment implements CountryView{
             }
             else{
                 Chip chip = new Chip(getContext());
+                chip.setChipBackgroundColorResource(R.color.main_green);
+                //chip.setTextAppearanceResource(R.style.ChipTextStyle);
                 countriesChipGroup.addView(chip);
                 //ChipDrawable chipDrawable = ChipDrawable.createFromResource(getContext(), com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice);
                 //chip.setChipDrawable(chipDrawable);
                 chip.setText(countries.get(i).getStrArea());
                 chip.setHeight(160);
-                chip.setTextColor(ContextCompat.getColor(getContext(), R.color.main_green));
+                chip.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 chip.setTextSize(18);
             }
         }

@@ -1,14 +1,15 @@
 package com.example.foodplanner.categories.presenter;
 
-
+import com.example.foodplanner.Model.Category;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
-import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.categories.View.CategoryFragment;
 import com.example.foodplanner.categories.View.CategoryView;
-
 import java.util.List;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class CategoryPresenterImpl implements NetworkCallback, CategoryPresenter {
+public class CategoryPresenterImpl implements CategoryPresenter {
 
     MealsRepositoryImpl repository;
     CategoryView view;
@@ -20,17 +21,12 @@ public class CategoryPresenterImpl implements NetworkCallback, CategoryPresenter
     }
 
     @Override
-    public void onSuccessResult(List categories) {
-        view.showData(categories);
-    }
-
-    @Override
-    public void onFailureResult(String errorMsg) {
-        view.showErrorMsg(errorMsg);
-    }
-
-    @Override
     public void getCategories() {
-        repository.getAllCategories(this);
+        Observable<List<Category>> observable = repository.getAllCategories();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(categoryList -> {
+                    view.showData(categoryList);
+                });
     }
 }

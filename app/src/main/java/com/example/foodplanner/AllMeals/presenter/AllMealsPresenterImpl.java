@@ -1,16 +1,20 @@
 package com.example.foodplanner.AllMeals.presenter;
 
+import com.example.foodplanner.search.view.AllCountryMealsFragment;
+import com.example.foodplanner.search.view.AllIngredientMealsFragment;
 import com.example.foodplanner.AllMeals.View.AllMealsFragment;
 import com.example.foodplanner.AllMeals.View.MealsView;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
-import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.countries.View.CountryFragment;
 import com.example.foodplanner.countries.View.CountryView;
-
 import java.util.List;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class AllMealsPresenterImpl implements NetworkCallback, AllMealsPresenter {
+public class AllMealsPresenterImpl implements AllMealsPresenter {
 
     MealsRepositoryImpl repository;
     MealsView view;
@@ -29,34 +33,53 @@ public class AllMealsPresenterImpl implements NetworkCallback, AllMealsPresenter
         this.countryView = countryFragment;
     }
 
+    public AllMealsPresenterImpl(AllCountryMealsFragment allCountryMealsFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = allCountryMealsFragment;
+    }
+
+    public AllMealsPresenterImpl(AllIngredientMealsFragment allIngredientMealsFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = allIngredientMealsFragment;
+    }
+
 
     @Override
     public void getAllMeals(String categoryName) {
-        repository.getAllMeals(this , categoryName);
+        Observable<List<Meal>> observable = repository.getAllMeals(categoryName);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealList -> {
+                    view.showData(mealList);
+                });
     }
 
     @Override
     public void getAllCountryMeals(String countryName) {
-        repository.getAllCountryMeals(this , countryName);
+        Observable<List<Meal>> observable = repository.getAllCountryMeals(countryName);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealList -> {
+                    view.showData(mealList);
+                });
+    }
+
+    @Override
+    public void getAllIngredientMeals(String ingredientName) {
+        Observable<List<Meal>> observable = repository.getAllIngredientMeals(ingredientName);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealList -> {
+                    view.showData(mealList);
+                });
     }
 
     @Override
     public void addToFav(Meal meal) {
-        repository.insertMeal(meal);
+        Completable completable = repository.insertMeal(meal);
+        completable.subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    @Override
-    public void onSuccessResult(List list) {
-        if(countryView != null){
-            countryView.showPopularMeals(list);
-        }
-        else{
-            view.showData(list);
-        }
-    }
 
-    @Override
-    public void onFailureResult(String errorMsg) {
-        view.showErrorMsg(errorMsg);
-    }
 }

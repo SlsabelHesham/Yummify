@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/account_information" />
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/user"
+        android:title="@string/account_information" />
     <item
         android:id="@+id/favouritesFragment"
-        android:icon="@drawable/home_cards"
+        android:icon="@drawable/not_favourite"
         android:title="@string/my_favourites_menu_item" />
 
-    <item android:title="@string/weekly_plan" />
-    <item android:title="@string/logout" />
+    <item
+        android:id="@+id/planFragment"
+        android:icon="@drawable/planmeals"
+        android:title="@string/weekly_plan" />
+    <item
+        android:id="@+id/welcomeFragment"
+        android:icon="@drawable/logout"
+        android:title="@string/logout"
+        />
 </menu>

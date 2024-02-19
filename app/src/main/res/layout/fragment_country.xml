@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_green"
+    android:background="@color/background"
     tools:context=".countries.View.CountryFragment">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/bree_serif"
         android:text="@string/countries"
-        android:textColor="@color/white"
+        android:textColor="@color/main_green"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
         android:id="@+id/countryAnimation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:alpha="0.5"
+        android:alpha="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         android:fontFamily="@font/bree_serif"
         android:gravity="center"
         android:text="@string/hint_countries"
-        android:textColor="?android:attr/textColorHintInverse"
+        android:textColor="?android:attr/textColorHint"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

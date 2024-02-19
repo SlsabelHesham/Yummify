@@ -47,7 +47,7 @@
                 android:layout_marginEnd="98dp"
                 android:fontFamily="@font/bree_serif"
                 android:text="Title:"
-                android:textColor="@color/white"
+                android:textColor="@color/main_green"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/mealImage"
@@ -62,7 +62,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/bree_serif"
                 android:text="Title:"
-                android:textColor="@color/white"
+                android:textColor="@color/main_green"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/tvMealName"
@@ -72,13 +72,13 @@
 
             <TextView
                 android:id="@+id/tvMealArea"
-                android:layout_width="200dp"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="25dp"
                 android:fontFamily="@font/bree_serif"
                 android:text="Title:"
-                android:textColor="@color/white"
+                android:textColor="@color/main_green"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -87,17 +87,32 @@
                 app:layout_constraintStart_toStartOf="@+id/tvMealCategory"
                 app:layout_constraintTop_toBottomOf="@+id/tvMealCategory" />
 
-            <ImageButton
+            <TextView
                 android:id="@+id/favouriteBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:background="@drawable/fav_icon"
+                android:fontFamily="@font/bree_serif"
+                android:text="@string/ingredients"
+                android:textColor="@color/main_green"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvMealArea"
                 app:layout_constraintEnd_toEndOf="@+id/mealImage"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/tvMealArea"
-                app:srcCompat="@drawable/fav_icon" />
+                app:layout_constraintStart_toEndOf="@+id/tvMealArea" />
+
+            <TextView
+                android:id="@+id/ingredientsNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bree_serif"
+                android:text="16"
+                android:textColor="@color/main_green"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/favouriteBtn"
+                app:layout_constraintEnd_toEndOf="@+id/favouriteBtn"
+                app:layout_constraintStart_toStartOf="@+id/favouriteBtn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
