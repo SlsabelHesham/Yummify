@@ -169,10 +169,7 @@ public class SearchFragment extends Fragment implements SearchView {
                 }
             }
         });
-
-
     }
-
     @SuppressLint("CheckResult")
     public void categoryObserver(Observable<String> observable){
         observable.subscribe(

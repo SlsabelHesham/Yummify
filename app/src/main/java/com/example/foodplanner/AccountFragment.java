@@ -130,12 +130,12 @@ public class AccountFragment extends Fragment implements FavMealsView, MealsView
                                                         dbMeals.add(meal).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                             @Override
                                                             public void onSuccess(DocumentReference documentReference) {
-                                                                Toast.makeText(getContext(), "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getContext(), "Your Meal has been added", Toast.LENGTH_SHORT).show();
                                                             }
                                                         }).addOnFailureListener(new OnFailureListener() {
                                                             @Override
                                                             public void onFailure(@NonNull Exception e) {
-                                                                Toast.makeText(getContext(), "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getContext(), "Fail to add meal \n" + e, Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
                                                     }
@@ -156,12 +156,12 @@ public class AccountFragment extends Fragment implements FavMealsView, MealsView
                                         dbMealsPlan.add(mealPlan).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(getContext(), "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Your meal has been added", Toast.LENGTH_SHORT).show();
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(getContext(), "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Fail to add meal \n" + e, Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -199,7 +199,7 @@ public class AccountFragment extends Fragment implements FavMealsView, MealsView
                                 Toast.makeText(getContext(), "Your favourite Meals are restored", Toast.LENGTH_SHORT).show();
                             })
                             .addOnFailureListener(e -> {
-                                Toast.makeText(getContext(), "Failed to load meals from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Failed to load your meals " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
 
                     dbMealsPlan.whereEqualTo("email", email)
@@ -216,7 +216,7 @@ public class AccountFragment extends Fragment implements FavMealsView, MealsView
                                 Toast.makeText(getContext(), "Your plan are restored", Toast.LENGTH_SHORT).show();
                             })
                             .addOnFailureListener(e -> {
-                                Toast.makeText(getContext(), "Failed to load meals from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Failed to load your plan +" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                 }
                 else {

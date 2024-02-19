@@ -7,9 +7,7 @@ import com.example.foodplanner.Model.MealPlan;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
 import com.example.foodplanner.plan.view.PlanFragment;
 import com.example.foodplanner.plan.view.PlanView;
-
 import java.util.List;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
