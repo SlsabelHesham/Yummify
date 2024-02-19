@@ -21,6 +21,7 @@ public interface MealsLocalDataSource {
 
 
     Flowable<List<MealPlan>> getPlan(String email , String day);
+    Flowable<List<MealPlan>> getPlan(String email);
     Completable deletePlanMeal(MealPlan mealPlan);
     Completable deletePlan(String email);
     Completable addMealToPlan(MealPlan mealPlan);

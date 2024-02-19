@@ -212,6 +212,7 @@ public class SearchFragment extends Fragment implements SearchView {
         .subscribe(
                 mealName -> {
                     if(searchMeal){
+                        Log.i("TEST123456", "mealObserver: ");
                         searchPresenter.getMealsByName(mealName);
                     }
 

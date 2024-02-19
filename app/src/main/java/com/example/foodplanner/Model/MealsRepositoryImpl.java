@@ -1,7 +1,5 @@
 package com.example.foodplanner.Model;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.foodplanner.Network.MealsRemoteDataSource;
 import com.example.foodplanner.db.MealsLocalDataSource;
 
@@ -95,6 +93,11 @@ public class MealsRepositoryImpl implements MealRepository {
     @Override
     public Flowable<List<MealPlan>> getPlan(String email, String day) {
         return mealsLocalDataSource.getPlan(email , day);
+    }
+
+    @Override
+    public Flowable<List<MealPlan>> getAllWeekPlan(String email) {
+        return mealsLocalDataSource.getPlan(email);
     }
     @Override
     public Completable deletePlanMeal(MealPlan mealPlan) {

@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
         switchToSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_loginFragment_to_signupFragment);
+                navController.navigate(LoginFragmentDirections.actionLoginFragmentToSignupFragment());
             }
         });
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -116,7 +116,7 @@ public class LoginFragment extends Fragment {
                                     SharedPreferences.Editor editor = preferences.edit();
                                     editor.putBoolean("isLoggedIn", true);
                                     editor.apply();
-                                    navController.navigate(R.id.action_loginFragment_to_homeFragment);
+                                    navController.navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment());
                                 } else {
                                     EditText password =  getView().findViewById(R.id.passwordET);
                                      password.requestFocus();

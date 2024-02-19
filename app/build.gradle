@@ -66,5 +66,8 @@ dependencies {
     implementation 'com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0'
     implementation'androidx.room:room-rxjava3:2.4.1'
 
+    implementation 'com.google.firebase:firebase-firestore:22.0.1'
+
+
 
 }

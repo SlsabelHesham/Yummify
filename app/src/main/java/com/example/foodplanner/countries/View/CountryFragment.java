@@ -101,12 +101,14 @@ public class CountryFragment extends Fragment implements CountryView{
             }
             else{
                 Chip chip = new Chip(getContext());
+                chip.setChipBackgroundColorResource(R.color.main_green);
+                //chip.setTextAppearanceResource(R.style.ChipTextStyle);
                 countriesChipGroup.addView(chip);
                 //ChipDrawable chipDrawable = ChipDrawable.createFromResource(getContext(), com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice);
                 //chip.setChipDrawable(chipDrawable);
                 chip.setText(countries.get(i).getStrArea());
                 chip.setHeight(160);
-                chip.setTextColor(ContextCompat.getColor(getContext(), R.color.main_green));
+                chip.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 chip.setTextSize(18);
             }
         }

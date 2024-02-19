@@ -2,6 +2,7 @@ package com.example.foodplanner.meal.presenter;
 
 import android.annotation.SuppressLint;
 
+import com.example.foodplanner.AccountFragment;
 import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
 import com.example.foodplanner.meal.view.MealFragment;
@@ -24,6 +25,12 @@ public class MealPresenterImpl implements  MealPresenter {
         this.repository = productsRepository;
         this.view = mealFragment;
     }
+
+    public MealPresenterImpl(AccountFragment accountFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = accountFragment;
+    }
+
     @SuppressLint("CheckResult")
     @Override
     public void getMealDetails(String mealName) {

@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,28 +52,7 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
     private WebView webView;
     String embedHtml;
     OnMealClickListener onMealClickListener;
-    TextView mealName , mealCategory , mealArea,
-            mealIng1 , mealMes1,
-            mealIng2 , mealMes2,
-            mealIng3 , mealMes3,
-            mealIng4 , mealMes4,
-            mealIng5 , mealMes5,
-            mealIng6 , mealMes6,
-            mealIng7 , mealMes7,
-            mealIng8 , mealMes8,
-            mealIng9 , mealMes9,
-            mealIng10 , mealMes10,
-            mealIng11, mealMes11,
-            mealIng12 , mealMes12,
-            mealIng13 , mealMes13,
-            mealIng14 , mealMes14,
-            mealIng15 , mealMes15,
-            mealIng16 , mealMes16,
-            mealIng17 , mealMes17,
-            mealIng18 , mealMes18,
-            mealIng19 , mealMes19,
-            mealIng20 , mealMes20,
-            mealInstructionTV , mealInstruction;
+    TextView mealName , mealCategory , mealArea, mealIng1 , mealMes1, mealIng2 , mealMes2, mealIng3 , mealMes3, mealIng4 , mealMes4, mealIng5 , mealMes5, mealIng6 , mealMes6, mealIng7 , mealMes7, mealIng8 , mealMes8, mealIng9 , mealMes9, mealIng10 , mealMes10, mealIng11, mealMes11, mealIng12 , mealMes12, mealIng13 , mealMes13, mealIng14 , mealMes14, mealIng15 , mealMes15, mealIng16 , mealMes16, mealIng17 , mealMes17, mealIng18 , mealMes18, mealIng19 , mealMes19, mealIng20 , mealMes20, mealInstructionTV , mealInstruction;
     NavController navController;
 
     ImageView mealFavImage ,mealVideoImage , mealImage, ing1Img,ing2Img,ing3Img,ing4Img,ing5Img,ing6Img,ing7Img,ing8Img,ing9Img,ing10Img,
@@ -99,7 +80,7 @@ public class MealFragment extends Fragment implements MealsView , OnMealClickLis
             mealPresenter = new MealPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(),
                     MealsLocalDataSourceImpl.getInstance(getContext())));
             checkMealObservable = mealPresenter.checkMealExist(receivedObject.getIdMeal());
-checkMeal(checkMealObservable);
+            checkMeal(checkMealObservable);
             //if (receivedObject.getStrYoutube() == null) {
               //  mealPresenter.getMealDetails(receivedObject.getStrMeal());
             //}
@@ -206,8 +187,18 @@ checkMeal(checkMealObservable);
         mealFavImage = view.findViewById(R.id.favImage);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user != null ? user.getEmail() : null;
-        mealPresenter.getMealDetails(receivedObject.getStrMeal());
+
         navController = Navigation.findNavController((Activity) view.getContext() , R.id.fragmentNavHost);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            mealPresenter.getMealDetails(receivedObject.getStrMeal());
+        } else {
+            showMealDetails();
+            mealFavImage.setImageResource(R.drawable.favourite);
+        }
         /*
 
         if(receivedObject.getStrCategory() != null){

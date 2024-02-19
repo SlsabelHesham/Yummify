@@ -21,6 +21,9 @@ public class MealPlan implements Serializable {
         this.meal = meal;
     }
 
+    public MealPlan() {
+    }
+
     public Meal getMeal() {
         return meal;
     }

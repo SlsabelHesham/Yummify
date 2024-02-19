@@ -6,11 +6,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/row"
-        android:layout_width="220dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:cardBackgroundColor="@color/card_green"
-        app:cardCornerRadius="35dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true">
 
@@ -28,8 +28,8 @@
                 android:fontFamily="@font/bree_serif"
                 android:gravity="center"
                 android:text="Egypt"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textColor="@color/main_green"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

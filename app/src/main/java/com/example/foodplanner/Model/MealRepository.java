@@ -34,6 +34,9 @@ public interface MealRepository {
 
 
     Flowable<List<MealPlan>> getPlan(String email , String day);
+
+    Flowable<List<MealPlan>> getAllWeekPlan(String email);
+
     Completable deletePlanMeal(MealPlan mealPlan);
     Completable addMealToPlan(MealPlan mealPlan);
     Completable deletePlan(String email);

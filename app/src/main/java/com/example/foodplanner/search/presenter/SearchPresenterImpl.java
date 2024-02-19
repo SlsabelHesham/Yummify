@@ -53,6 +53,12 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     @Override
     public void getMealsByName(String mealName) {
-        repository.getMeal(mealName);
+        Observable<List<Meal>> observable = repository.getMeal(mealName);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealList -> {
+                    view.showMealsData(mealList);
+                });
+
     }
 }

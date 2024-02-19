@@ -160,7 +160,7 @@ public class SignupFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
                     public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                        if (task.getResult().getSignInMethods().size() == 0) {
+                        if (task.getResult().getSignInMethods().size() != 0) {
                             email.requestFocus();
                             email.setError("Email already exist, Try to login");
                             }

@@ -115,6 +115,9 @@ public class Meal implements Serializable {
         this.strMeasure20 = strMeasure20;
     }
 
+    public Meal() {
+    }
+
     @NonNull
     public String getIdMeal() {
         return idMeal;

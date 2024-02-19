@@ -36,6 +36,8 @@ public interface MealsDAO {
 
     @Query("SELECT * FROM meals_plan_table WHERE email = :email and day = :day")
     Flowable<List<MealPlan>> getPlan(String email , String day);
+    @Query("SELECT * FROM meals_plan_table WHERE email = :email")
+    Flowable<List<MealPlan>> getPlan(String email);
     @Delete
     Completable deletePlanMeal (MealPlan mealPlan);
     @Query("DELETE FROM meals_plan_table WHERE email = :email")

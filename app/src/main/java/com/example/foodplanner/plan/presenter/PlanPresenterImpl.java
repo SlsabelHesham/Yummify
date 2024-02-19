@@ -1,10 +1,8 @@
 package com.example.foodplanner.plan.presenter;
 
-import androidx.lifecycle.LiveData;
-
+import com.example.foodplanner.AccountFragment;
 import com.example.foodplanner.FavouriteMeals.View.FavMealsView;
 import com.example.foodplanner.FavouriteMeals.View.FavouritesFragment;
-import com.example.foodplanner.Model.Meal;
 import com.example.foodplanner.Model.MealPlan;
 import com.example.foodplanner.Model.MealsRepositoryImpl;
 import com.example.foodplanner.plan.view.PlanFragment;
@@ -23,6 +21,7 @@ public class PlanPresenterImpl implements PlanPresenter {
     FavMealsView mealsView;
 
 
+
     public PlanPresenterImpl(PlanFragment planFragment, MealsRepositoryImpl productsRepository) {
         this.repository = productsRepository;
         this.view = planFragment;
@@ -33,9 +32,18 @@ public class PlanPresenterImpl implements PlanPresenter {
         this.mealsView = favouritesFragment;
     }
 
+    public PlanPresenterImpl(AccountFragment accountFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = accountFragment;
+    }
+
     @Override
     public Flowable<List<MealPlan>> getWeekPlan(String email , String day) {
         return repository.getPlan(email , day);
+    }
+    @Override
+    public Flowable<List<MealPlan>> getAllWeekPlan(String email) {
+        return repository.getAllWeekPlan(email);
     }
 
     @Override

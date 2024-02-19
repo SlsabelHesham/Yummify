@@ -44,7 +44,11 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource{
         storedPlan = mealsDAO.getPlan(email , day);
         return storedPlan;
     }
-
+    @Override
+    public Flowable<List<MealPlan>> getPlan(String email) {
+        storedPlan = mealsDAO.getPlan(email);
+        return storedPlan;
+    }
 
 
 

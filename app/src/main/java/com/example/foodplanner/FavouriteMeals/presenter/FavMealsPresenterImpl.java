@@ -1,7 +1,11 @@
 package com.example.foodplanner.FavouriteMeals.presenter;
 
+import android.content.Context;
+import android.view.View;
+
 import androidx.lifecycle.LiveData;
 
+import com.example.foodplanner.AccountFragment;
 import com.example.foodplanner.FavouriteMeals.View.FavMealsView;
 import com.example.foodplanner.FavouriteMeals.View.FavouritesFragment;
 import com.example.foodplanner.Model.Meal;
@@ -22,6 +26,12 @@ public class FavMealsPresenterImpl implements FavMealsPresenter {
     public FavMealsPresenterImpl(FavouritesFragment favouritesFragment, MealsRepositoryImpl productsRepository) {
         this.repository = productsRepository;
         this.view = favouritesFragment;
+    }
+
+
+    public FavMealsPresenterImpl(AccountFragment accountFragment, MealsRepositoryImpl instance) {
+        this.repository = instance;
+        this.view = accountFragment;
     }
 
     @Override

@@ -11,7 +11,7 @@
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@color/card_green"
+        app:cardBackgroundColor="@color/main_green"
         app:cardCornerRadius="35dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true">
@@ -42,7 +42,7 @@
                 android:fontFamily="@font/bree_serif"
                 android:gravity="center"
                 android:text="Category"
-                android:textColor="@color/white"
+                android:textColor="@color/card_green"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
